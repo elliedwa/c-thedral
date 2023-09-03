@@ -10,6 +10,8 @@ RELEASE_CFLAGS = $(RELEASE_DEFINES) -Ofast -march=native -mtune=native -flto
 AM_CFLAGS = $(COMMON_CFLAGS) $(DEBUG_CFLAGS)
 
 bin_PROGRAMS = cathedral
-cathedral_SOURCES = cathedral.c
+
+cathedral_SOURCES = main.c pieces.c pieces.h \
+										placement_gen.c placement_gen.h bitboard.c bitboard.h
 cathedral_CFLAGS = $(AM_CFLAGS)
 
