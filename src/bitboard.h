@@ -2,6 +2,7 @@
 #define CATHEDRAL_BITBOARD_H_
 
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdint.h>
 
 #define NUM_ROWS 10
@@ -39,5 +40,7 @@ bool validate_padded_bitboard(PADDED_BITBOARD board);
 bool check_stop_bit(PADDED_BITBOARD board);
 BITBOARD_HALF bb_half_remove_padding(PADDED_BITBOARD_HALF half);
 BITBOARD bb_remove_padding(PADDED_BITBOARD board);
+
+void DEBUG_print_bitboard_hex(BITBOARD b);
 
 #endif

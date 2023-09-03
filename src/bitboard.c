@@ -78,3 +78,9 @@ bb_remove_padding(PADDED_BITBOARD board)
         res.bb[1]    = bb_half_remove_padding(board.bb[1]);
         return res;
 }
+void
+DEBUG_print_bitboard_hex(BITBOARD b)
+{
+        printf("%.16lx|%.16lx\n", b.bb[0], b.bb[1]);
+}
+
