@@ -29,18 +29,27 @@ obj_to_bin(char *dest, const void *object, size_t osize)
 #define NUM_ROWS 10
 #define NUM_COLS 10
 #define NUM_SQUARES (NUM_ROWS * NUM_COLS)
-
+#define PADDED_ROW_LENGTH (NUM_COLS + 1)
 
 typedef struct {
         uint64_t bb[2];
 } BITBOARD;
 
+typedef BITBOARD PADDED_BITBOARD;
+typedef uint64_t BITBOARD_HALF;
+typedef BITBOARD_HALF PADDED_BITBOARD_HALF;
+
 /* const BITBOARD OFFBOARD_MASK = {{0xffc0080100200400, 0xffc0080100200400}}; */
-const uint64_t PADDING_BITS  = 0x40080100200400;
-const uint64_t OVERFLOW_BIT  = (1ULL << 55);
-const uint64_t ILLEGAL_MASK  = PADDING_BITS | OVERFLOW_BIT;
-const uint64_t PIECES_BITS   = 0xff00000000000000;
-const uint64_t OFFBOARD_MASK = ILLEGAL_MASK | PIECES_BITS;
+const PADDED_BITBOARD_HALF PADDING_BITS        = 0x40080100200400;
+const PADDED_BITBOARD_HALF OVERFLOW_BIT        = (1ULL << 55);
+const PADDED_BITBOARD_HALF PADDED_ILLEGAL_MASK = PADDING_BITS | OVERFLOW_BIT;
+const PADDED_BITBOARD_HALF PADDED_PIECES_BITS  = 0xff00000000000000;
+const PADDED_BITBOARD_HALF PADDED_OFFBOARD_MASK =
+    PADDED_ILLEGAL_MASK | PADDED_PIECES_BITS;
+
+const BITBOARD_HALF PIECES_BITS = 0xfffc000000000000;
+
+const uint64_t ROW_MASK = (1ULL << NUM_COLS) - 1;
 
 /* this really only works one shift at a time, but that's all we need */
 BITBOARD
@@ -85,40 +94,40 @@ bb_xor(BITBOARD lhs, BITBOARD rhs)
 }
 
 bool
-validate_bitboard(BITBOARD board)
+bb_empty(BITBOARD board)
+{
+        return (board.bb[0] || board.bb[1]);
+}
+
+bool
+validate_padded_bitboard(PADDED_BITBOARD board)
 {
         return !((board.bb[0] & PADDING_BITS) || (board.bb[1] & PADDING_BITS));
 }
 
 bool
-check_stop_bit(BITBOARD board)
+check_stop_bit(PADDED_BITBOARD board)
 {
         return (board.bb[1] & OVERFLOW_BIT);
 }
 
-void
-print_bitboard_half(uint64_t half)
+uint64_t
+bb_half_remove_padding(PADDED_BITBOARD_HALF half)
 {
-        uint64_t printable = ~OFFBOARD_MASK;
-        int i              = 0;
-        while (printable) {
-                if (++i % 11 == 0) {
-                        printf("\n");
-                }
-                if (printable & 1) {
-                        putchar('0' + (char)(half & 1));
-                }
-                half >>= 1;
-                printable >>= 1;
+        uint64_t res = 0;
+        for (int r = 0; r < 5; r++) {
+                res |= (half & (ROW_MASK << (r * PADDED_ROW_LENGTH))) >> r;
         }
-        putchar('\n');
+        return res;
 }
 
-void
-print_bitboard(BITBOARD *board)
+BITBOARD
+bb_remove_padding(PADDED_BITBOARD board)
 {
-        print_bitboard_half(board->bb[0]);
-        print_bitboard_half(board->bb[1]);
+        BITBOARD res = {{0, 0}};
+        res.bb[0]    = bb_half_remove_padding(board.bb[0]);
+        res.bb[1]    = bb_half_remove_padding(board.bb[1]);
+        return res;
 }
 
 enum piece {
@@ -153,6 +162,8 @@ enum piece {
         DARK_ACADEMY,
 };
 
+#define WHICH_PIECE(x) ((x) & (0x10 - 1))
+
 enum piece_shape {
         SHAPE_TAVERN,
         SHAPE_STABLE,
@@ -175,7 +186,7 @@ struct piece_data {
         enum piece_shape id;
         int symmetry;
 
-        uint64_t masks[4];
+        PADDED_BITBOARD_HALF masks[4];
 };
 
 #define CATHEDRAL_HEIGHT 0 /* why waste a bit for only one piece? */
@@ -202,7 +213,7 @@ get_placement(enum piece_shape shape, int sym, int shift)
 {
         struct piece_data piece = PIECE_DATA_ARRAY[shape];
         assert(sym >= 0 && sym < 4);
-        BITBOARD board = {{piece.masks[sym % (piece.symmetry + 1)]}};
+        PADDED_BITBOARD board = {{piece.masks[sym % (piece.symmetry + 1)]}};
         while (shift--) {
                 bb_shl(board);
         }
@@ -254,7 +265,9 @@ pl_add_shape(placement_list *pl)
         enum piece_shape next_shape = last_shape->shape + 1;
         pl_node *new_shape;
         if (next_shape < NUM_PIECE_SHAPES) {
-                BITBOARD board = {{PIECE_DATA_ARRAY[next_shape].masks[0]}};
+                PADDED_BITBOARD pboard = {
+                    {PIECE_DATA_ARRAY[next_shape].masks[0]}};
+                BITBOARD board = bb_remove_padding(pboard);
                 new_shape      = pl_new_node(next_shape, board);
         }
         else {
@@ -283,18 +296,15 @@ generate_placements(void)
                 enum piece_shape cur_shape = pl.tail->shape;
                 struct piece_data piece    = PIECE_DATA_ARRAY[cur_shape];
                 for (int sym = 0; sym <= piece.symmetry; sym++) {
-                        BITBOARD board = {{piece.masks[sym], 0}};
-                        while (!check_stop_bit(board)) {
-                                if (validate_bitboard(board)) {
+                        BITBOARD pb = {{piece.masks[sym], 0}};
+                        while (!check_stop_bit(pb)) {
+                                if (validate_padded_bitboard(pb)) {
+                                        BITBOARD board = bb_remove_padding(pb);
                                         pl_add_node(&pl, cur_shape, board);
                                         num_boards++;
-                                        print_bitboard(&board);
-                                        printf("\n");
                                 }
-                                board = bb_shl(board);
+                                pb = bb_shl(pb);
                         }
-                        /* print_bitboard(&board); */
-                        /* printf("\n"); */
                 }
                 pl.tail = pl.tail->next_shape;
         }
@@ -306,22 +316,6 @@ generate_placements(void)
 int
 main(void)
 {
-        int num_boards = 0;
         generate_placements();
-        /* for (size_t i = 0; i < NUM_PIECE_SHAPES; i++) { */
-        /*         struct piece_data piece = PIECE_DATA_ARRAY[i]; */
-        /*         for (int sym = 0; sym <= piece.symmetry; sym++) { */
-        /*                 BITBOARD board = {{piece.masks[sym], 0}}; */
-        /*                 while (!check_stop_bit(board)) { */
-        /*                         if (validate_bitboard(board)) { */
-        /*                                 num_boards++; */
-        /*                         } */
-        /*                         board = bb_shl(board); */
-        /*                 } */
-        /*                 /\* print_bitboard(&board); *\/ */
-        /*                 /\* printf("\n"); *\/ */
-        /*         } */
-        /* } */
-        /* printf("%d placements found\n", num_boards); */
         return 0;
 }
