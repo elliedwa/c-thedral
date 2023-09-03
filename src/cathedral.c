@@ -30,18 +30,6 @@ obj_to_bin(char *dest, const void *object, size_t osize)
 #define NUM_COLS 10
 #define NUM_SQUARES (NUM_ROWS * NUM_COLS)
 
-/* typedef union { */
-/*         uint64_t bits; */
-/*         struct { */
-/*                 unsigned int pieces : 8; */
-/*                 unsigned int end_of_board : 1; */
-/*                 struct { */
-/*                         unsigned int off : 1; */
-/*                         unsigned int on : 10; */
-/*                 } rows[5]; */
-/*         }; */
-
-/* } HALF_BITBOARD; */
 
 typedef struct {
         uint64_t bb[2];
@@ -242,12 +230,6 @@ pl_new_node(enum piece_shape shape, BITBOARD board)
         node->next_board = NULL;
         node->next_shape = NULL;
         return node;
-}
-
-placement_list *
-pl_init_list(void)
-{
-        pl_node *first_node = pl_new_node(0, get_placement(0, 0, 0));
 }
 
 pl_node *
