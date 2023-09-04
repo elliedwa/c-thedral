@@ -13,9 +13,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 
-#include "placement_gen.h"
-#include "bitboard.h"
-#include "pieces.h"
+#include "cthedral/placement_gen.h"
+#include "cthedral/bitboard.h"
+#include "cthedral/pieces.h"
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>

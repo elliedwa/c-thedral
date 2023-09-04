@@ -13,7 +13,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 
-#include "bitboard.h"
+#include "cthedral/bitboard.h"
 
 /* this really only works one shift at a time, but that's all we need */
 BITBOARD

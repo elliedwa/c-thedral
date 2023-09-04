@@ -18,12 +18,14 @@
 
 AC_PREREQ([2.71])
 AC_INIT([c-thedral], [0.0.2])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AC_CONFIG_SRCDIR([src/main.c])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
+AC_CONFIG_SRCDIR([src/pieces.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_RANLIB
+AM_PROG_AR
 
 # Checks for libraries.
 
@@ -38,6 +40,5 @@ AC_TYPE_UINT64_T
 # Checks for library functions.
 AC_FUNC_MALLOC
 
-AC_CONFIG_FILES([Makefile
-                 src/Makefile])
+AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
