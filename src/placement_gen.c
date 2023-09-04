@@ -46,15 +46,6 @@ get_placement(enum piece_shape shape, int sym, int shift)
         return board;
 }
 
-BITBOARD
-add_piece_bit(BITBOARD board, enum piece p)
-{
-        assert(!(board.bb[0] & PIECES_BITS) && !(board.bb[1] & PIECES_BITS));
-        BITBOARD res = board;
-        assert(WHOSE_PIECE(p) == 0 || WHOSE_PIECE(p) == 1);
-        res.bb[WHOSE_PIECE(p)] |= (1 << (50 + (WHICH_PIECE(p))));
-        return res;
-}
 pl_node *
 pl_new_node(enum piece_shape shape, BITBOARD board)
 {
@@ -112,39 +103,30 @@ generate_placements(void)
         pl_node *shape;
         while ((shape = pl_add_shape(&pl))) {
         }
-        pl.tail = pl.head;
-#ifdef DEBUG
+        pl.tail        = pl.head;
         int num_boards = 0;
-#endif
         while (pl.tail) {
                 enum piece_shape cur_shape = pl.tail->shape;
-                const enum piece (*cur_pieces)[4] = &(PIECES_BY_SHAPE[cur_shape]);
+                const enum piece(*cur_pieces)[4] =
+                    &(PIECES_BY_SHAPE[cur_shape]);
 
-                struct piece_data piece    = PIECE_DATA_ARRAY[cur_shape];
+                struct piece_data piece = PIECE_DATA_ARRAY[cur_shape];
 
                 for (int sym = 0; sym <= piece.symmetry; sym++) {
                         BITBOARD pb = {{piece.masks[sym], 0}};
                         while (!check_stop_bit(pb)) {
                                 if (validate_padded_bitboard(pb)) {
                                         BITBOARD board = bb_remove_padding(pb);
-                                        int p = 0;
-                                        do {
-                                                BITBOARD bwp = add_piece_bit(board, *cur_pieces[p]);
-#ifdef DEBUG
-                                                DEBUG_print_bitboard_hex(bwp);
-                                                num_boards++;
-#endif
-                                                pl_add_node(&pl, cur_shape, bwp);
-
-                                        } while (*cur_pieces[++p]);
+                                        int p          = 0;
+                                        DEBUG_print_bitboard_hex(board);
+                                        num_boards++;
+                                        pl_add_node(&pl, cur_shape, board);
                                 }
                                 pb = bb_shl(pb);
                         }
                 }
                 pl.tail = pl.tail->next_shape;
         }
-#ifdef DEBUG
         printf("found %d placements\n", num_boards);
-#endif
         return pl;
 }

@@ -4,7 +4,7 @@
 AC_PREREQ([2.71])
 AC_INIT([cathedral], [0.0.1])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
-AC_CONFIG_SRCDIR([src/cathedral.c])
+AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
