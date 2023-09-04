@@ -1,1 +1,3 @@
-Welcome to c-thedral, a library for simulating a certain polyomino-based board game.
+Welcome to c-thedral, a library for simulating a certain polyomino-based board
+game. I know it doesn't look like a library right now, but that's because it's
+early days. 
