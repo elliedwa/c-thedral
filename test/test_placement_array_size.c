@@ -20,6 +20,9 @@ along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 int
 main(void)
 {
-        /*         generate_placements(); */
-        return 0;
+        placement_array pa;
+        if (sizeof(pa)/sizeof(pa[0]) == 2597) {
+                return 0;
+        }
+        return 1;
 }

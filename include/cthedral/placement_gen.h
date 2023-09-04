@@ -30,6 +30,9 @@ typedef struct {
         pl_node *head;
         pl_node *tail;
 } placement_list;
+
+typedef BITBOARD placement_array[2597];
+
 placement_list generate_placements(void);
 
 #endif

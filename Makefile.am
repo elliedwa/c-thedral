@@ -29,6 +29,6 @@ nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_ge
 libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
 LDADD = libcthedral.la
-check_PROGRAMS = test/test_placement_gen
+check_PROGRAMS = test/test_placement_array_size
 AM_DEFAULT_SOURCE_EXT = .c
 TESTS = $(check_PROGRAMS)
