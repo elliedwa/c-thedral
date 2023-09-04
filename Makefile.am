@@ -22,8 +22,13 @@ COMMON_CFLAGS = $(COMMON_DEFINES) -Wall -Wextra -Wno-unused-variable -pipe \
 								-pedantic -Wimplicit-fallthrough
 AM_CFLAGS = $(COMMON_CFLAGS)
 
-noinst_LIBRARIES = libcthedral.a
+lib_LTLIBRARIES = libcthedral.la
 
-libcthedral_a_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c
+libcthedral_la_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c
 nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h
-libcthedral_a_CFLAGS = $(AM_CFLAGS)
+libcthedral_la_CFLAGS = $(AM_CFLAGS)
+
+LDADD = libcthedral.la
+check_PROGRAMS = test/test_placement_gen
+AM_DEFAULT_SOURCE_EXT = .c
+TESTS = $(check_PROGRAMS)
