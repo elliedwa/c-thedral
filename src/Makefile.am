@@ -23,4 +23,3 @@ bin_PROGRAMS = cathedral
 cathedral_SOURCES = main.c pieces.c pieces.h \
 										placement_gen.c placement_gen.h bitboard.c bitboard.h
 cathedral_CFLAGS = $(AM_CFLAGS)
-
