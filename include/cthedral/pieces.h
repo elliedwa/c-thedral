@@ -17,6 +17,7 @@ along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 #define CATHEDRAL_PIECES_H_
 
 enum piece {
+        CATHEDRAL,
         LIGHT_TAVERN_1,
         LIGHT_TAVERN_2,
         LIGHT_STABLE_1,
@@ -31,8 +32,8 @@ enum piece {
         LIGHT_CASTLE,
         LIGHT_INFIRMARY,
         LIGHT_ACADEMY,
-        NUM_PIECES_PER_SIDE,
-        DARK_TAVERN_1 = 0x10,
+        DARK_PIECE_OFFSET,
+        DARK_TAVERN_1 = LIGHT_TAVERN_1 + DARK_PIECE_OFFSET,
         DARK_TAVERN_2,
         DARK_STABLE_1,
         DARK_STABLE_2,
@@ -47,6 +48,8 @@ enum piece {
         DARK_INFIRMARY,
         DARK_ACADEMY,
 };
+
+#define NUM_PIECES_PER_SIDE LIGHT_ACADEMY
 
 #define WHICH_PIECE(x) ((x) & (0x10 - 1))
 #define WHOSE_PIECE(x) ((x) >> 4)

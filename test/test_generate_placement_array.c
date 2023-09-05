@@ -13,27 +13,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 
-#ifndef CATHEDRAL_PLACEMENT_GEN_H_
-#define CATHEDRAL_PLACEMENT_GEN_H_
+#include "cthedral/placement_gen.h"
+#include <string.h>
 
-#include "bitboard.h"
-#include "pieces.h"
-
-typedef struct pl_node_s {
-        enum piece_shape shape;
-        BITBOARD board;
-        struct pl_node_s *next_board;
-        struct pl_node_s *next_shape;
-} pl_node;
-
-typedef struct {
-        pl_node *head;
-        pl_node *tail;
-} placement_list;
-
-typedef BITBOARD placement_array[2597];
-
-placement_list generate_placements(void);
-void generate_placement_array(placement_array pa);
-
-#endif
+int
+main(void)
+{
+        placement_array pa;
+        generate_placement_array(pa);
+        BITBOARD expected = {{1, 0}};
+        if (memcmp(&pa[0], &expected, sizeof(BITBOARD))) {
+                return 0;
+        }
+        return 1;
+}
