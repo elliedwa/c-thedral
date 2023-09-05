@@ -13,7 +13,10 @@
 # You should have received a copy of the GNU General Public License
 # along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
 
+ACLOCAL_AMFLAGS = -I m4
+
 dist_doc_DATA = README
+EXTRA_DIST = extern/tau/LICENSE
 
 AM_CPPFLAGS = -Iinclude -I$(srcdir)/include
 
@@ -29,7 +32,11 @@ nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_ge
 libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
 LDADD = libcthedral.la
-check_PROGRAMS = test/test_placement_array_size \
-	test/test_generate_placement_array
-AM_DEFAULT_SOURCE_EXT = .c
+
+
+check_PROGRAMS = test/cthedral_tests
+test_cthedral_tests_SOURCES = test/cthedral_tests.c extern/tau/tau/tau.h extern/tau/tau/compilers.h \
+												 extern/tau/tau/misc.h extern/tau/tau/types.h
+test_cthedral_tests_CPPFLAGS = -Iextern/tau -I$(srcdir)/extern/tau
+
 TESTS = $(check_PROGRAMS)
