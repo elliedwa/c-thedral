@@ -32,8 +32,14 @@ libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
 LDADD = libcthedral.la
 
+TEST_LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
+									$(top_srcdir)/tap-driver.sh
+TEST_LOG_DRIVER_FLAGS = --comments --ignore-exit
 
-check_PROGRAMS = test/cthedral_tests
-test_cthedral_tests_SOURCES = test/cthedral_tests.c test/rexo.h
 
+check_LIBRARIES = test/libtap.a
+test_libtap_a_SOURCES = test/tap.c test/tap.h
+check_PROGRAMS = test/placement_array_size.test
+test_placement_array_size_test_LDADD = test/libtap.a
+test_placement_array_size_test_SOURCES = test/placement_array_size.test.c
 TESTS = $(check_PROGRAMS)

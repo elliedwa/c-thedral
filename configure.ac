@@ -20,6 +20,7 @@ AC_PREREQ([2.71])
 AC_INIT([c-thedral], [0.0.2])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects serial-tests])
 AC_CONFIG_SRCDIR([src/pieces.c])
+AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIRS([m4])
 
@@ -41,5 +42,6 @@ AC_TYPE_UINT64_T
 AC_FUNC_MALLOC
 
 AC_CONFIG_FILES([Makefile])
+AC_REQUIRE_AUX_FILE([tap-driver.sh])
 LT_INIT
 AC_OUTPUT
