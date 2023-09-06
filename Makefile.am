@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
 
+ACLOCAL_AMFLAGS = -I m4
+
 dist_doc_DATA = README
 
 AM_CPPFLAGS = -Iinclude -I$(srcdir)/include
@@ -29,6 +31,15 @@ nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_ge
 libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
 LDADD = libcthedral.la
-check_PROGRAMS = test/test_placement_array_size
-AM_DEFAULT_SOURCE_EXT = .c
+
+TEST_LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
+									$(top_srcdir)/tap-driver.sh
+TEST_LOG_DRIVER_FLAGS = --comments --ignore-exit
+
+
+check_LIBRARIES = test/libtap.a
+test_libtap_a_SOURCES = test/tap.c test/tap.h
+check_PROGRAMS = test/placement_array_size.test
+test_placement_array_size_test_LDADD = test/libtap.a
+test_placement_array_size_test_SOURCES = test/placement_array_size.test.c
 TESTS = $(check_PROGRAMS)

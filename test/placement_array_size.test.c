@@ -13,16 +13,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 
-#include "cthedral/bitboard.h"
-#include "cthedral/pieces.h"
 #include "cthedral/placement_gen.h"
+#include "tap.h"
 
 int
 main(void)
 {
+        plan(1);
         placement_array pa;
-        if (sizeof(pa)/sizeof(pa[0]) == 2597) {
-                return 0;
-        }
-        return 1;
+        cmp_ok(sizeof(pa) / sizeof(pa[0]), "==", 2597);
+
+        done_testing();
 }
