@@ -16,7 +16,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
 dist_doc_DATA = README
-EXTRA_DIST = extern/tau/LICENSE
 
 AM_CPPFLAGS = -Iinclude -I$(srcdir)/include
 
@@ -35,8 +34,6 @@ LDADD = libcthedral.la
 
 
 check_PROGRAMS = test/cthedral_tests
-test_cthedral_tests_SOURCES = test/cthedral_tests.c extern/tau/tau/tau.h extern/tau/tau/compilers.h \
-												 extern/tau/tau/misc.h extern/tau/tau/types.h
-test_cthedral_tests_CPPFLAGS = -Iextern/tau -I$(srcdir)/extern/tau $(AM_CPPFLAGS)
+test_cthedral_tests_SOURCES = test/cthedral_tests.c test/rexo.h
 
 TESTS = $(check_PROGRAMS)
