@@ -60,7 +60,7 @@ bb_xor(BITBOARD lhs, BITBOARD rhs)
 bool
 bb_empty(BITBOARD board)
 {
-        return (board.bb[0] || board.bb[1]);
+        return (board.bb[0] == 0) && (board.bb[1] == 0);
 }
 
 bool
