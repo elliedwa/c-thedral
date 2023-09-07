@@ -18,11 +18,11 @@
 
 AC_PREREQ([2.71])
 AC_INIT([c-thedral], [0.0.2])
-AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects serial-tests])
+AC_CONFIG_AUX_DIR([build-aux])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 AC_CONFIG_SRCDIR([src/pieces.c])
 AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_MACRO_DIRS([m4])
 
 # Checks for programs.
 AC_PROG_CC
