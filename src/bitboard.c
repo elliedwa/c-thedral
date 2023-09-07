@@ -17,7 +17,7 @@ along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 
 /* this really only works one shift at a time, but that's all we need */
 PADDED_BITBOARD
-bb_shl(BITBOARD board)
+pbb_shl(BITBOARD board)
 {
 
         BITBOARD res = {{board.bb[0] << 1, board.bb[1] << 1}};
@@ -76,19 +76,19 @@ bb_empty(BITBOARD board)
 }
 
 bool
-validate_padded_bitboard(PADDED_BITBOARD board)
+pbb_validate(PADDED_BITBOARD board)
 {
         return !((board.bb[0] & PADDING_BITS) || (board.bb[1] & PADDING_BITS));
 }
 
 bool
-check_stop_bit(PADDED_BITBOARD board)
+pbb_check_stop_bit(PADDED_BITBOARD board)
 {
         return (board.bb[1] & OVERFLOW_BIT);
 }
 
 BITBOARD_HALF
-bb_half_remove_padding(PADDED_BITBOARD_HALF half)
+pbb_half_remove_padding(PADDED_BITBOARD_HALF half)
 {
         uint64_t res = 0;
         for (int r = 0; r < 5; r++) {
@@ -98,11 +98,11 @@ bb_half_remove_padding(PADDED_BITBOARD_HALF half)
 }
 
 BITBOARD
-bb_remove_padding(PADDED_BITBOARD board)
+pbb_remove_padding(PADDED_BITBOARD board)
 {
         BITBOARD res = {{0, 0}};
-        res.bb[0]    = bb_half_remove_padding(board.bb[0]);
-        res.bb[1]    = bb_half_remove_padding(board.bb[1]);
+        res.bb[0]    = pbb_half_remove_padding(board.bb[0]);
+        res.bb[1]    = pbb_half_remove_padding(board.bb[1]);
         return res;
 }
 

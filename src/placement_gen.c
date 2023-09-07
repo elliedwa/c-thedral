@@ -56,7 +56,7 @@ get_placement(enum piece_shape shape, int sym, int shift)
         assert(sym >= 0 && sym < 4);
         PADDED_BITBOARD board = {{piece.masks[sym % (piece.symmetry + 1)]}};
         while (shift--) {
-                bb_shl(board);
+                pbb_shl(board);
         }
         return board;
 }
@@ -96,7 +96,7 @@ pl_add_shape(placement_list *pl)
         if (next_shape < NUM_PIECE_SHAPES) {
                 PADDED_BITBOARD pboard = {
                     {PIECE_DATA_ARRAY[next_shape].masks[0]}};
-                BITBOARD board = bb_remove_padding(pboard);
+                BITBOARD board = pbb_remove_padding(pboard);
                 new_shape      = pl_new_node(next_shape, board);
         }
         else {
@@ -129,15 +129,15 @@ generate_placements(void)
 
                 for (int sym = 0; sym <= piece.symmetry; sym++) {
                         BITBOARD pb = {{piece.masks[sym], 0}};
-                        while (!check_stop_bit(pb)) {
-                                if (validate_padded_bitboard(pb)) {
-                                        BITBOARD board = bb_remove_padding(pb);
+                        while (!pbb_check_stop_bit(pb)) {
+                                if (pbb_validate(pb)) {
+                                        BITBOARD board = pbb_remove_padding(pb);
                                         int p          = 0;
                                         DEBUG_print_bitboard_hex(board);
                                         num_boards++;
                                         pl_add_node(&pl, cur_shape, board);
                                 }
-                                pb = bb_shl(pb);
+                                pb = pbb_shl(pb);
                         }
                 }
                 pl.tail = pl.tail->next_shape;
@@ -158,7 +158,7 @@ generate_placement_array(placement_array pa)
                         assert(ndx <= sizeof(pa) / sizeof(*pa));
                         PADDED_BITBOARD mask = {
                             {PIECE_DATA_ARRAY[shape].masks[mask_index], 0}};
-                        while (!check_stop_bit(mask)) {
+                        while (!pbb_check_stop_bit(mask)) {
                                 pa[ndx++] = mask;
                         }
                 }
