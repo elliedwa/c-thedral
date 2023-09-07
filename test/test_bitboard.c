@@ -19,10 +19,18 @@ along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 int
 main(void)
 {
-        plan(2);
-        BITBOARD empty = {{0,0}};
-        ok(bb_empty(empty));
-        BITBOARD not_empty = {{0,1}};
-        ok(!bb_empty(not_empty));
+        plan(NO_PLAN);
+
+        BITBOARD empty = {{0, 0}};
+        ok(bb_empty(empty), "empty bitboards can be detected");
+        BITBOARD not_empty = {{0, 1}};
+        ok(!bb_empty(not_empty), "non-empty bitboards can also be detected");
+
+        ok(bb_eq(empty, empty), "a bitboard equals itself");
+        ok(bb_ne(empty, not_empty),
+           "a bitboard does not equal some other bitboard");
+        cmp_ok(bb_eq(empty, empty), "==", !bb_ne(empty, empty),
+               "bb_eq and bb_ne are inverses of each other");
+
         done_testing();
 }

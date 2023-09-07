@@ -16,7 +16,7 @@ along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 #include "cthedral/bitboard.h"
 
 /* this really only works one shift at a time, but that's all we need */
-BITBOARD
+PADDED_BITBOARD
 bb_shl(BITBOARD board)
 {
 
@@ -27,6 +27,18 @@ bb_shl(BITBOARD board)
                 res.bb[1] |= 1;   /*  ... and add it to second half */
         }
         return res;
+}
+
+bool
+bb_eq(BITBOARD lhs, BITBOARD rhs)
+{
+        return lhs.bb[0] == rhs.bb[0] && lhs.bb[1] == rhs.bb[1];
+}
+
+bool
+bb_ne(BITBOARD lhs, BITBOARD rhs)
+{
+        return !bb_eq(lhs, rhs);
 }
 
 BITBOARD
@@ -93,6 +105,7 @@ bb_remove_padding(PADDED_BITBOARD board)
         res.bb[1]    = bb_half_remove_padding(board.bb[1]);
         return res;
 }
+
 void
 DEBUG_print_bitboard_hex(BITBOARD b)
 {

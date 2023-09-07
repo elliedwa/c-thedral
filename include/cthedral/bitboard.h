@@ -45,12 +45,14 @@ static const BITBOARD_HALF PIECES_BITS = 0xfffc000000000000;
 
 static const uint64_t ROW_MASK         = (1ULL << NUM_COLS) - 1;
 
-BITBOARD bb_shl(BITBOARD board);
+PADDED_BITBOARD bb_shl(PADDED_BITBOARD board);
 BITBOARD bb_not(BITBOARD board);
 BITBOARD bb_and(BITBOARD lhs, BITBOARD rhs);
 BITBOARD bb_or(BITBOARD lhs, BITBOARD rhs);
 BITBOARD bb_xor(BITBOARD lhs, BITBOARD rhs);
 bool bb_empty(BITBOARD board);
+bool bb_eq(BITBOARD lhs, BITBOARD rhs);
+bool bb_ne(BITBOARD lhs, BITBOARD rhs);
 bool validate_padded_bitboard(PADDED_BITBOARD board);
 bool check_stop_bit(PADDED_BITBOARD board);
 BITBOARD_HALF bb_half_remove_padding(PADDED_BITBOARD_HALF half);
