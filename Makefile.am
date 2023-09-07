@@ -33,12 +33,12 @@ libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
 LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
                   $(top_srcdir)/build-aux/tap-driver.sh
-AM_LOG_DRIVER_FLAGS = --comments --ignore-exit
+AM_LOG_DRIVER_FLAGS = --ignore-exit
 
 check_LIBRARIES = test/libtap.a
 test_libtap_a_SOURCES = test/tap.c test/tap.h
 LDADD = libcthedral.la test/libtap.a
-check_PROGRAMS = test/placement_array_size
+check_PROGRAMS = test/placement_array_size test/test_bitboard
 AM_DEFAULT_SOURCE_EXT = .c
 TESTS = $(check_PROGRAMS)
 EXTRA_DIST = $(TESTS)
