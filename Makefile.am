@@ -30,16 +30,15 @@ libcthedral_la_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c
 nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h
 libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
-LDADD = libcthedral.la
 
-TEST_LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
-									$(top_srcdir)/tap-driver.sh
-TEST_LOG_DRIVER_FLAGS = --comments --ignore-exit
-
+LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
+                  $(top_srcdir)/build-aux/tap-driver.sh
+AM_LOG_DRIVER_FLAGS = --comments --ignore-exit
 
 check_LIBRARIES = test/libtap.a
 test_libtap_a_SOURCES = test/tap.c test/tap.h
-check_PROGRAMS = test/placement_array_size.test
-test_placement_array_size_test_LDADD = test/libtap.a
-test_placement_array_size_test_SOURCES = test/placement_array_size.test.c
+LDADD = libcthedral.la test/libtap.a
+check_PROGRAMS = test/placement_array_size
+AM_DEFAULT_SOURCE_EXT = .c
 TESTS = $(check_PROGRAMS)
+EXTRA_DIST = $(TESTS)

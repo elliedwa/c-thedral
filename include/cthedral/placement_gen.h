@@ -34,5 +34,6 @@ typedef struct {
 typedef BITBOARD placement_array[2597];
 
 placement_list generate_placements(void);
+void generate_placement_array(placement_array pa);
 
 #endif

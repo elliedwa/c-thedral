@@ -19,9 +19,10 @@ along with c-thedral.  If not, see <https://www.gnu.org/licenses/>. */
 int
 main(void)
 {
-        plan(1);
+        plan(2);
         placement_array pa;
         cmp_ok(sizeof(pa) / sizeof(pa[0]), "==", 2597);
+        cmp_ok(sizeof(pa), "==", sizeof(BITBOARD) * 2597);
 
         done_testing();
 }

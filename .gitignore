@@ -112,3 +112,14 @@ m4/lt~obsolete.m4
 # can automatically generate from config.status script
 # (which is called by configure script))
 #Makefile
+
+# build-aux versions of some of the above scripts
+build-aux/ar-lib
+build-aux/compile
+build-aux/config.guess
+build-aux/config.sub
+build-aux/depcomp
+build-aux/install-sh
+build-aux/ltmain.sh
+build-aux/missing
+build-aux/test-driver

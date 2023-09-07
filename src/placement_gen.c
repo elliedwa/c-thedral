@@ -145,3 +145,22 @@ generate_placements(void)
         printf("found %d placements\n", num_boards);
         return pl;
 }
+
+void
+generate_placement_array(placement_array pa)
+{
+        int ndx = 0;
+        for (enum piece_shape shape = SHAPE_TAVERN; shape < NUM_PIECE_SHAPES;
+             shape++) {
+                for (int mask_index = 0;
+                     mask_index <= PIECE_DATA_ARRAY[shape].symmetry;
+                     mask_index++) {
+                        assert(ndx <= sizeof(pa) / sizeof(*pa));
+                        PADDED_BITBOARD mask = {
+                            {PIECE_DATA_ARRAY[shape].masks[mask_index], 0}};
+                        while (!check_stop_bit(mask)) {
+                                pa[ndx++] = mask;
+                        }
+                }
+        }
+}
