@@ -40,13 +40,13 @@ pbb_shl(BITBOARD board)
 }
 
 bool
-bb_eq(BITBOARD lhs, BITBOARD rhs)
+bb_eq(BITBOARD *lhs, BITBOARD *rhs)
 {
-        return lhs.bb[0] == rhs.bb[0] && lhs.bb[1] == rhs.bb[1];
+        return lhs->bb[0] == rhs->bb[0] && lhs->bb[1] == rhs->bb[1];
 }
 
 bool
-bb_ne(BITBOARD lhs, BITBOARD rhs)
+bb_ne(BITBOARD *lhs, BITBOARD *rhs)
 {
         return !bb_eq(lhs, rhs);
 }
@@ -58,19 +58,19 @@ bb_not(BITBOARD board)
         return res;
 }
 
-BITBOARD
-bb_and(BITBOARD lhs, BITBOARD rhs)
+void
+bb_and(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
 {
-        BITBOARD res = {{lhs.bb[0] & rhs.bb[0], lhs.bb[1] & rhs.bb[1]}};
-        return res;
+        res->bb[0] = lhs->bb[0] & rhs->bb[0];
+        res->bb[1] = lhs->bb[1] & rhs->bb[1];
+}
+void
+bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+{
+        res->bb[0] = lhs->bb[0] | rhs->bb[0];
+        res->bb[1] = lhs->bb[1] | rhs->bb[1];
 }
 
-BITBOARD
-bb_or(BITBOARD lhs, BITBOARD rhs)
-{
-        BITBOARD res = {{lhs.bb[0] | rhs.bb[0], lhs.bb[1] | rhs.bb[1]}};
-        return res;
-}
 
 BITBOARD
 bb_xor(BITBOARD lhs, BITBOARD rhs)
@@ -80,9 +80,9 @@ bb_xor(BITBOARD lhs, BITBOARD rhs)
 }
 
 bool
-bb_empty(BITBOARD board)
+bb_empty(BITBOARD *board)
 {
-        return (board.bb[0] == 0) && (board.bb[1] == 0);
+        return (board->bb[0] == 0) && (board->bb[1] == 0);
 }
 
 bool

@@ -41,12 +41,12 @@ static const BITBOARD_HALF PIECES_BITS = 0xfffc000000000000;
 static const uint64_t ROW_MASK         = (1ULL << NUM_COLS) - 1;
 
 BITBOARD bb_not(BITBOARD board);
-BITBOARD bb_and(BITBOARD lhs, BITBOARD rhs);
-BITBOARD bb_or(BITBOARD lhs, BITBOARD rhs);
+void bb_and(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs);
+void bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs);
 BITBOARD bb_xor(BITBOARD lhs, BITBOARD rhs);
-bool bb_empty(BITBOARD board);
-bool bb_eq(BITBOARD lhs, BITBOARD rhs);
-bool bb_ne(BITBOARD lhs, BITBOARD rhs);
+bool bb_empty(BITBOARD *board);
+bool bb_eq(BITBOARD *lhs, BITBOARD *rhs);
+bool bb_ne(BITBOARD *lhs, BITBOARD *rhs);
 
 void DEBUG_print_bitboard_hex(BITBOARD b);
 
