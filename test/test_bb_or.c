@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2023 Elliot C. Edwards
  *
@@ -20,7 +19,7 @@
 #include "tap.h"
 #include <stdint.h>
 
-        int
+int
 main(void)
 {
         plan(4);

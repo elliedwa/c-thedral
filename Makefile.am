@@ -39,7 +39,7 @@ check_LIBRARIES = test/libtap.a
 test_libtap_a_SOURCES = test/tap.c test/tap.h
 LDADD = libcthedral.la test/libtap.a
 check_PROGRAMS = test/placement_array_size test/test_bb_and test/test_bb_or \
-								 test/test_bb_xor test/test_bb_eq_ne
+								 test/test_bb_xor test/test_bb_eq_ne test/test_bb_copy
 AM_DEFAULT_SOURCE_EXT = .c
 TESTS = $(check_PROGRAMS)
 EXTRA_DIST = $(TESTS)

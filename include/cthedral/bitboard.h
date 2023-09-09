@@ -35,7 +35,6 @@ typedef BITBOARD PADDED_BITBOARD;
 typedef uint64_t BITBOARD_HALF;
 typedef BITBOARD_HALF PADDED_BITBOARD_HALF;
 
-
 static const BITBOARD_HALF PIECES_BITS = 0xfffc000000000000;
 
 static const uint64_t ROW_MASK         = (1ULL << NUM_COLS) - 1;
@@ -47,6 +46,8 @@ void bb_xor(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs);
 bool bb_empty(BITBOARD *board);
 bool bb_eq(BITBOARD *lhs, BITBOARD *rhs);
 bool bb_ne(BITBOARD *lhs, BITBOARD *rhs);
+
+void bb_copy(BITBOARD *to, BITBOARD *from);
 
 void DEBUG_print_bitboard_hex(BITBOARD b);
 
