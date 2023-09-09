@@ -23,21 +23,12 @@
 
 #include "cthedral/bitboard.h"
 
-
-
-/* this really only works one shift at a time, but that's all we need */
-PADDED_BITBOARD
-pbb_shl(BITBOARD board)
+bool
+bb_empty(BITBOARD *board)
 {
-
-        BITBOARD res = {{board.bb[0] << 1, board.bb[1] << 1}};
-        if (res.bb[0] & OVERFLOW_BIT) {
-                res.bb[0] ^=
-                    OVERFLOW_BIT; /* remove the bit from first half... */
-                res.bb[1] |= 1;   /*  ... and add it to second half */
-        }
-        return res;
+        return (board->bb[0] == 0) && (board->bb[1] == 0);
 }
+
 
 bool
 bb_eq(BITBOARD *lhs, BITBOARD *rhs)
@@ -71,18 +62,11 @@ bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
         res->bb[1] = lhs->bb[1] | rhs->bb[1];
 }
 
-
-BITBOARD
-bb_xor(BITBOARD lhs, BITBOARD rhs)
+void
+bb_xor(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
 {
-        BITBOARD res = {{lhs.bb[0] ^ rhs.bb[0], lhs.bb[1] ^ rhs.bb[1]}};
-        return res;
-}
-
-bool
-bb_empty(BITBOARD *board)
-{
-        return (board->bb[0] == 0) && (board->bb[1] == 0);
+        res->bb[0] = lhs->bb[0] ^ rhs->bb[0];
+        res->bb[1] = lhs->bb[1] ^ rhs->bb[1];
 }
 
 bool
@@ -113,6 +97,20 @@ pbb_remove_padding(PADDED_BITBOARD board)
         BITBOARD res = {{0, 0}};
         res.bb[0]    = pbb_half_remove_padding(board.bb[0]);
         res.bb[1]    = pbb_half_remove_padding(board.bb[1]);
+        return res;
+}
+
+/* this really only works one shift at a time, but that's all we need */
+PADDED_BITBOARD
+pbb_shl(BITBOARD board)
+{
+
+        BITBOARD res = {{board.bb[0] << 1, board.bb[1] << 1}};
+        if (res.bb[0] & OVERFLOW_BIT) {
+                res.bb[0] ^=
+                    OVERFLOW_BIT; /* remove the bit from first half... */
+                res.bb[1] |= 1;   /*  ... and add it to second half */
+        }
         return res;
 }
 
