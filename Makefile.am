@@ -26,8 +26,9 @@ AM_CFLAGS = $(COMMON_CFLAGS)
 
 lib_LTLIBRARIES = libcthedral.la
 
-libcthedral_la_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c
-nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h
+libcthedral_la_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c src/pbb.c
+nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h \
+												 include/cthedral/pbb.h
 libcthedral_la_CFLAGS = $(AM_CFLAGS)
 
 
@@ -38,8 +39,8 @@ AM_LOG_DRIVER_FLAGS = --ignore-exit
 check_LIBRARIES = test/libtap.a
 test_libtap_a_SOURCES = test/tap.c test/tap.h
 LDADD = libcthedral.la test/libtap.a
-check_PROGRAMS = test/placement_array_size test/test_bb_and test/test_bb_or \
-								 test/test_bb_xor test/test_bb_eq_ne test/test_bb_copy
+check_PROGRAMS = test/test_placement_array_size test/test_bb_and test/test_bb_or \
+								 test/test_bb_xor test/test_bb_eq_ne test/test_bb_copy test/test_generate_placement_array
 AM_DEFAULT_SOURCE_EXT = .c
 TESTS = $(check_PROGRAMS)
 EXTRA_DIST = $(TESTS)

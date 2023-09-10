@@ -21,10 +21,9 @@
 int
 main(void)
 {
-        plan(2);
+        plan(NO_PLAN);
         placement_array pa;
-        cmp_ok(sizeof(pa) / sizeof(pa[0]), "==", 2597);
-        cmp_ok(sizeof(pa), "==", sizeof(BITBOARD) * 2597);
-
+        lives_ok(generate_placement_array(&pa);
+                 , "generate_placement_array() doesn't crash");
         done_testing();
 }
