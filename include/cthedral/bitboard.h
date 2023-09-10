@@ -31,9 +31,7 @@ typedef struct {
         uint64_t bb[2];
 } BITBOARD;
 
-typedef BITBOARD PADDED_BITBOARD;
 typedef uint64_t BITBOARD_HALF;
-typedef BITBOARD_HALF PADDED_BITBOARD_HALF;
 
 static const BITBOARD_HALF PIECES_BITS = 0xfffc000000000000;
 
@@ -50,19 +48,5 @@ bool bb_ne(BITBOARD *lhs, BITBOARD *rhs);
 void bb_copy(BITBOARD *to, BITBOARD *from);
 
 void DEBUG_print_bitboard_hex(BITBOARD b);
-
-static const PADDED_BITBOARD_HALF PADDING_BITS = 0x40080100200400;
-static const PADDED_BITBOARD_HALF OVERFLOW_BIT = (1ULL << 55);
-static const PADDED_BITBOARD_HALF PADDED_ILLEGAL_MASK =
-    PADDING_BITS | OVERFLOW_BIT;
-static const PADDED_BITBOARD_HALF PADDED_PIECES_BITS = 0xff00000000000000;
-static const PADDED_BITBOARD_HALF PADDED_OFFBOARD_MASK =
-    PADDED_ILLEGAL_MASK | PADDED_PIECES_BITS;
-
-PADDED_BITBOARD pbb_shl(PADDED_BITBOARD board);
-BITBOARD_HALF pbb_half_remove_padding(PADDED_BITBOARD_HALF half);
-BITBOARD pbb_remove_padding(PADDED_BITBOARD board);
-bool pbb_validate(PADDED_BITBOARD board);
-bool pbb_check_stop_bit(PADDED_BITBOARD board);
 
 #endif

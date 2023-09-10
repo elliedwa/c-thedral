@@ -15,16 +15,16 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CATHEDRAL_PLACEMENT_GEN_H_
-#define CATHEDRAL_PLACEMENT_GEN_H_
+#include "cthedral/placement_gen.h"
+#include "tap.h"
 
-#include "bitboard.h"
-#include "pieces.h"
-
-typedef struct placement_array {
-        BITBOARD bb[2597];
-} placement_array;
-
-placement_array *generate_placement_array(placement_array *pa);
-
-#endif
+int
+main(void)
+{
+        plan(2);
+        placement_array pa;
+        cmp_ok(sizeof(pa) / sizeof(pa.bb[0]), "==", 2597, "2597 bitboards");
+        cmp_ok(sizeof(pa), "==", sizeof(BITBOARD) * 2597,
+               "2597 bitboards, tested another way");
+        done_testing();
+}
