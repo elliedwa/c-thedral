@@ -49,17 +49,18 @@ pbb_remove_padding(PADDED_BITBOARD board)
 }
 
 /* this really only works one shift at a time, but that's all we need */
-PADDED_BITBOARD
-pbb_shl(BITBOARD board)
+PADDED_BITBOARD *
+pbb_shl(PADDED_BITBOARD *board)
 {
 
-        BITBOARD res = {{board.bb[0] << 1, board.bb[1] << 1}};
-        if (res.bb[0] & OVERFLOW_BIT) {
-                res.bb[0] ^=
+        board->bb[0] <<= 1;
+        board->bb[1] <<= 1;
+        if (board->bb[0] & OVERFLOW_BIT) {
+                board->bb[0] ^=
                     OVERFLOW_BIT; /* remove the bit from first half... */
-                res.bb[1] |= 1;   /*  ... and add it to second half */
+                board->bb[1] |= 1;   /*  ... and add it to second half */
         }
-        return res;
+        return board;
 }
 
 void
