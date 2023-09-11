@@ -20,11 +20,14 @@
 
 #include "bitboard.h"
 #include "pieces.h"
+#include <stdlib.h>
 
 typedef struct placement_array {
-        BITBOARD bb[2597];
+        BITBOARD bb[8192];
 } placement_array;
 
-placement_array *generate_placement_array(placement_array *pa);
+placement_array *pa_alloc(void);
+
+int generate_placement_array(placement_array *pa);
 
 #endif

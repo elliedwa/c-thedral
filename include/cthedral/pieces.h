@@ -18,6 +18,7 @@
 #ifndef CATHEDRAL_PIECES_H_
 #define CATHEDRAL_PIECES_H_
 
+#include "cthedral/bitboard.h"
 enum piece {
         CATHEDRAL,
         LIGHT_TAVERN_1,
@@ -74,22 +75,6 @@ enum piece_shape {
         NUM_PIECE_SHAPES
 };
 
-static const enum piece PIECES_BY_SHAPE[NUM_PIECE_SHAPES][4] = {
-    [SHAPE_TAVERN]        = {LIGHT_TAVERN_1, LIGHT_TAVERN_2, DARK_TAVERN_1,
-                             DARK_TAVERN_2},
-    [SHAPE_STABLE]        = {LIGHT_STABLE_1, LIGHT_STABLE_2, DARK_STABLE_1,
-                             DARK_STABLE_2},
-    [SHAPE_INN]           = {LIGHT_INN_1, LIGHT_INN_2, DARK_INN_1, DARK_INN_2},
-    [SHAPE_BRIDGE]        = {LIGHT_BRIDGE, DARK_BRIDGE},
-    [SHAPE_SQUARE]        = {LIGHT_SQUARE, DARK_SQUARE},
-    [SHAPE_ABBEY_LIGHT]   = {LIGHT_ABBEY},
-    [SHAPE_ABBEY_DARK]    = {DARK_ABBEY},
-    [SHAPE_MANOR]         = {LIGHT_MANOR, DARK_MANOR},
-    [SHAPE_TOWER]         = {LIGHT_TOWER, DARK_TOWER},
-    [SHAPE_CASTLE]        = {LIGHT_CASTLE, DARK_CASTLE},
-    [SHAPE_INFIRMARY]     = {LIGHT_INFIRMARY, DARK_INFIRMARY},
-    [SHAPE_ACADEMY_LIGHT] = {LIGHT_ACADEMY},
-    [SHAPE_ACADEMY_DARK]  = {DARK_ACADEMY},
-};
+BITBOARD piece_bit(enum piece p);
 
 #endif

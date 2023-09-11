@@ -16,3 +16,10 @@
  */
 
 #include "cthedral/pieces.h"
+
+BITBOARD
+piece_bit(enum piece p)
+{
+        BITBOARD res = {{0, 0}};
+        return res;
+}

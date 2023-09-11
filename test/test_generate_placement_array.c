@@ -19,18 +19,20 @@
 #include "cthedral/placement_gen.h"
 #include "tap.h"
 
+#include <stdlib.h>
+
 int
 main(void)
 {
         plan(NO_PLAN);
-        placement_array pa;
-        lives_ok(generate_placement_array(&pa);
-                 , "generate_placement_array() does not segfault");
-        BITBOARD first_cathedral_plcmt = {{0x400803802, 0}};
-        cmp_mem(&pa.bb[0], &first_cathedral_plcmt, sizeof(BITBOARD));
-        for (size_t i = 0; i < (sizeof(placement_array) / sizeof(BITBOARD));
-             i++) {
-                DEBUG_print_bitboard_hex(pa.bb[i]);
-        }
+        placement_array *pa = pa_alloc();
+        ok(pa != NULL, "placement_array can be allocated");
+        int num_placements = 0;
+        num_placements     = generate_placement_array(pa);
+        cmp_ok(num_placements, "==", 5546, "generates expected number of placements");
+        BITBOARD first_light_tavern_plcmt = {
+            {0x1ULL | (1ULL << (LIGHT_TAVERN_1)), 0}};
+        cmp_mem(&pa->bb[0], &first_light_tavern_plcmt, sizeof(BITBOARD));
+        free(pa);
         done_testing();
 }
