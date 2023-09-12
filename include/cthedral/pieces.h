@@ -19,7 +19,8 @@
 #define CATHEDRAL_PIECES_H_
 
 #include "cthedral/bitboard.h"
-enum piece {
+enum piece
+{
         CATHEDRAL,
         LIGHT_TAVERN_1,
         LIGHT_TAVERN_2,
@@ -54,10 +55,10 @@ enum piece {
 
 #define NUM_PIECES_PER_SIDE LIGHT_ACADEMY
 
-#define WHICH_PIECE(x) ((x) & (0x10 - 1))
-#define WHOSE_PIECE(x) ((x) >> 4)
+extern enum piece WHOSE_PIECE[DARK_ACADEMY + 1];
 
-enum piece_shape {
+enum piece_shape
+{
         SHAPE_TAVERN,
         SHAPE_STABLE,
         SHAPE_INN,

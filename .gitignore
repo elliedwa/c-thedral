@@ -111,7 +111,7 @@ m4/lt~obsolete.m4
 # (meta build system like autotools,
 # can automatically generate from config.status script
 # (which is called by configure script))
-#Makefile
+Makefile
 
 # build-aux versions of some of the above scripts
 build-aux/ar-lib
