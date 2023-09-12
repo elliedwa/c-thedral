@@ -23,8 +23,10 @@ main(void)
 {
         plan(2);
         placement_array pa;
-        cmp_ok(sizeof(pa) / sizeof(pa.bb[0]), "==", 2597, "2597 bitboards");
-        cmp_ok(sizeof(pa), "==", sizeof(BITBOARD) * 2597,
-               "2597 bitboards, tested another way");
+        diag("placement_array has defined capacity %d", PA_CAPACITY);
+        cmp_ok(sizeof(pa) / sizeof(pa.bb[0]), "==", PA_CAPACITY, "%d bitboards",
+               PA_CAPACITY);
+        cmp_ok(sizeof(pa), "==", sizeof(BITBOARD) * PA_CAPACITY,
+               "%d bitboards, tested another way", PA_CAPACITY);
         done_testing();
 }

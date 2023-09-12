@@ -19,6 +19,7 @@
 #include "cthedral/bitboard.h"
 #include "cthedral/pbb.h"
 #include "cthedral/pieces.h"
+
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -105,50 +106,40 @@ get_placement(enum piece_shape shape, int sym, int shift)
 */
 
 static const int placements_per_shape[NUM_PIECE_SHAPES] = {
-    [SHAPE_CATHEDRAL] = 56,
-    [SHAPE_TAVERN] = 100 * 4,
-    [SHAPE_STABLE] = 180 * 4,
-    [SHAPE_INN] = 324 * 4,
-    [SHAPE_BRIDGE] = 160*2,
-    [SHAPE_SQUARE] = 81*2,
-    [SHAPE_ABBEY_DARK] = 144,
-    [SHAPE_ABBEY_LIGHT] = 144,
-    [SHAPE_MANOR] = 288*2,
-    [SHAPE_INFIRMARY] = 64*2,
-    [SHAPE_TOWER] = 256*2,
-    [SHAPE_CASTLE] = 288*2,
-    [SHAPE_ACADEMY_LIGHT] = 256,
-    [SHAPE_ACADEMY_DARK] = 256,
+    [SHAPE_CATHEDRAL] = 56,      [SHAPE_TAVERN] = 100 * 4,
+    [SHAPE_STABLE] = 180 * 4,    [SHAPE_INN] = 324 * 4,
+    [SHAPE_BRIDGE] = 160 * 2,    [SHAPE_SQUARE] = 81 * 2,
+    [SHAPE_ABBEY_DARK] = 144,    [SHAPE_ABBEY_LIGHT] = 144,
+    [SHAPE_MANOR] = 288 * 2,     [SHAPE_INFIRMARY] = 64 * 2,
+    [SHAPE_TOWER] = 256 * 2,     [SHAPE_CASTLE] = 288 * 2,
+    [SHAPE_ACADEMY_LIGHT] = 256, [SHAPE_ACADEMY_DARK] = 256,
 };
-
-
 
 int
 generate_placement_array(placement_array *pa)
 {
         int ndx = 0;
-        for (int shape = 0; shape < NUM_PIECE_SHAPES;
-             shape++) {
-           struct piece_data data = PIECE_DATA_ARRAY[shape];
+        for (int shape = 0; shape < NUM_PIECE_SHAPES; shape++) {
+                struct piece_data data = PIECE_DATA_ARRAY[shape];
 
-                for (int mask_index = 0;
-                     mask_index < data.symmetry;
+                for (int mask_index = 0; mask_index < data.symmetry;
                      mask_index++) {
-                        PADDED_BITBOARD mask = {
-                            {data.masks[mask_index], 0}};
+                        PADDED_BITBOARD mask = {{data.masks[mask_index], 0}};
                         while (!pbb_check_stop_bit(mask)) {
-                            if (pbb_validate(mask)) {
-                                for (int pce = 0; pce < data.how_many; pce++) {
-                                    BITBOARD bit = piece_bit(data.pieces[pce]);
-                                    BITBOARD plcmt;
-                                    bb_or(&plcmt, &mask, &bit);
-                                bb_copy(&pa->bb[ndx++], &mask);
-                            }
-                            }
+                                if (pbb_validate(mask)) {
+                                        for (int pce = 0; pce < data.how_many;
+                                             pce++) {
+                                                BITBOARD bit =
+                                                    piece_bit(data.pieces[pce]);
+                                                BITBOARD plcmt = {{0, 0}};
+                                                ;
+                                                bb_or(&plcmt, &mask, &bit);
+                                                bb_copy(&pa->bb[ndx++], &plcmt);
+                                        }
+                                }
                                 pbb_shl(&mask);
                         }
                 }
-
         }
         return ndx;
 }

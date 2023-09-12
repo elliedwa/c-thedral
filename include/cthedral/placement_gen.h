@@ -22,8 +22,10 @@
 #include "pieces.h"
 #include <stdlib.h>
 
+#define PA_CAPACITY 8192
+
 typedef struct placement_array {
-        BITBOARD bb[8192];
+        BITBOARD bb[PA_CAPACITY];
 } placement_array;
 
 placement_array *pa_alloc(void);
