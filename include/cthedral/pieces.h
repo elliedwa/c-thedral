@@ -55,7 +55,7 @@ enum piece
 
 #define NUM_PIECES_PER_SIDE LIGHT_ACADEMY
 
-extern enum piece WHOSE_PIECE[DARK_ACADEMY + 1];
+extern size_t WHOSE_PIECE[DARK_ACADEMY + 1];
 
 enum piece_shape
 {
