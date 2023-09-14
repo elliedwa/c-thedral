@@ -128,3 +128,18 @@ bb_cmp(const void *lhs, const void *rhs)
         }
         return 0;
 }
+
+void
+DEBUG_print_bitboard_visual(BITBOARD *b)
+{
+        BITBOARD_HALF hfs[2] = {b->bb[0], b->bb[1]};
+        for (size_t sq = 0; sq < 100; sq++) {
+                BITBOARD_HALF *hf = &hfs[sq_to_bb_index[sq]];
+                putchar('0' + (char)(*hf & 1));
+                if (sq % 10 == 9) {
+                        putchar('\n');
+                }
+                *hf >>= 1;
+        }
+        putchar('\n');
+}
