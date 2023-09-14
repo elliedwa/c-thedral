@@ -17,14 +17,21 @@
 
 #include "cthedral/pieces.h"
 #include "cthedral/bitboard.h"
+
 size_t WHOSE_PIECE[DARK_ACADEMY + 1] = {
-    [LIGHT_TAVERN_1] = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, [DARK_TAVERN_1] = 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+    [LIGHT_TAVERN_1] = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    [DARK_TAVERN_1]  = 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+static const BITBOARD EMPTY_BITBOARD = {{0, 0}};
 
 BITBOARD
 piece_bit(enum piece p)
 {
-        BITBOARD_HALF b = 1ULL << (p + 49);
-        BITBOARD bit = {{0, 0}};
+        if (p == CATHEDRAL) {
+                return EMPTY_BITBOARD;
+        }
+        BITBOARD_HALF b        = 1ULL << ((p & 0xf) + 49);
+        BITBOARD bit           = {{0, 0}};
         bit.bb[WHOSE_PIECE[p]] = b;
 
         return bit;

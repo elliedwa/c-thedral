@@ -22,6 +22,7 @@
  */
 
 #include "cthedral/bitboard.h"
+#include <stdint.h>
 
 bool
 bb_empty(BITBOARD *board)
@@ -73,4 +74,50 @@ bb_copy(BITBOARD *to, BITBOARD *from)
 {
         to->bb[0] = from->bb[0];
         to->bb[1] = from->bb[1];
+}
+
+static uint32_t
+extract_piece_bit(const BITBOARD *bb)
+{
+        uint32_t bit          = 0;
+        uint32_t light_pieces = bb->bb[0] >> 49;
+        uint32_t dark_pieces  = bb->bb[1] >> 49;
+        bit |= dark_pieces;
+        bit <<= 14;
+        bit |= light_pieces;
+        return bit;
+}
+
+int
+bb_cmp(const void *lhs, const void *rhs)
+{
+        BITBOARD bb1 = *(const BITBOARD *)lhs;
+        BITBOARD bb2 = *(const BITBOARD *)rhs;
+
+        uint32_t pb1 = extract_piece_bit(&bb1);
+        uint32_t pb2 = extract_piece_bit(&bb2);
+
+        if (bb_ne(&bb1, &bb2)) {
+
+                if (pb1 < pb2) {
+                        return -1;
+                }
+                if (pb1 > pb2) {
+                        return 1;
+                }
+
+                if (bb1.bb[1] < bb2.bb[1]) {
+                        return -1;
+                }
+                if (bb1.bb[1] > bb2.bb[1]) {
+                        return 1;
+                }
+                if (bb1.bb[0] < bb2.bb[0]) {
+                        return -1;
+                }
+                if (bb1.bb[0] > bb2.bb[0]) {
+                        return 1;
+                }
+        }
+        return 0;
 }

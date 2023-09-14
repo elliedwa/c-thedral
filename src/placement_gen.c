@@ -132,7 +132,6 @@ generate_placement_array(placement_array *pa)
                                                 BITBOARD bit =
                                                     piece_bit(data.pieces[pce]);
                                                 BITBOARD plcmt = {{0, 0}};
-                                                ;
                                                 bb_or(&plcmt, &mask, &bit);
                                                 bb_copy(&pa->bb[ndx++], &plcmt);
                                         }

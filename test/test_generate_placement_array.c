@@ -32,8 +32,6 @@ main(void)
         cmp_ok(num_placements, "==", 5546, "generates expected number of placements");
         BITBOARD first_light_tavern_plcmt = {
             {0x1ULL | (1ULL << (LIGHT_TAVERN_1 + 49)), 0}};
-        DEBUG_print_bitboard_hex(first_light_tavern_plcmt);
-        DEBUG_print_bitboard_hex(pa->bb[0]);
         cmp_mem(&pa->bb[0], &first_light_tavern_plcmt, sizeof(BITBOARD));
         free(pa);
         done_testing();
