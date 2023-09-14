@@ -22,10 +22,18 @@
 #include "pieces.h"
 #include <stdlib.h>
 
-#define PA_CAPACITY 8192
+#define NUM_PLACEMENTS 5546U         /* theoretically! */
+#define NUM_CATHEDRAL_PLACEMENTS 56U
+#define NUM_PLAYER_PLACEMENTS ((NUM_PLACEMENTS - NUM_CATHEDRAL_PLACEMENTS) / 2)
+#define PA_CAPACITY NUM_PLACEMENTS
 
-typedef struct placement_array {
+typedef union placement_array {
         BITBOARD bb[PA_CAPACITY];
+        struct {
+                BITBOARD cathedral[NUM_CATHEDRAL_PLACEMENTS];
+                BITBOARD light[NUM_PLAYER_PLACEMENTS];
+                BITBOARD dark[NUM_PLAYER_PLACEMENTS];
+        };
 } placement_array;
 
 placement_array *pa_alloc(void);

@@ -15,18 +15,29 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "cthedral/bitboard.h"
 #include "cthedral/placement_gen.h"
 #include "tap.h"
 
 int
 main(void)
 {
-        plan(2);
+        plan(NO_PLAN);
         placement_array pa;
-        diag("placement_array has defined capacity %d", PA_CAPACITY);
-        cmp_ok(sizeof(pa) / sizeof(pa.bb[0]), "==", PA_CAPACITY, "%d bitboards",
-               PA_CAPACITY);
-        cmp_ok(sizeof(pa), "==", sizeof(BITBOARD) * PA_CAPACITY,
+        generate_placement_array(&pa);
+        cmp_ok(sizeof(pa.bb) / sizeof(pa.bb[0]), "==", PA_CAPACITY,
+               "%d bitboards", PA_CAPACITY);
+        cmp_ok(sizeof(pa.bb), "==", sizeof(BITBOARD) * PA_CAPACITY,
                "%d bitboards, tested another way", PA_CAPACITY);
+        cmp_ok(sizeof(pa.cathedral),
+               "==", sizeof(BITBOARD) * NUM_CATHEDRAL_PLACEMENTS,
+               "pa union works (cathedral)");
+        cmp_ok(sizeof(pa.light), "==", sizeof(BITBOARD) * NUM_PLAYER_PLACEMENTS,
+               "pa union works (light)");
+        cmp_ok(sizeof(pa.dark), "==", sizeof(BITBOARD) * NUM_PLAYER_PLACEMENTS,
+               "pa union works (dark)");
+        cmp_ok(sizeof(pa.bb),
+               "==", sizeof(pa.cathedral) + sizeof(pa.light) + sizeof(pa.dark),
+               "pa union works (sum of sizes)");
         done_testing();
 }
