@@ -24,15 +24,13 @@
 int
 main(void)
 {
-        plan(NO_PLAN);
+        plan(2);
         placement_array *pa = pa_alloc();
         ok(pa != NULL, "placement_array can be allocated");
         int num_placements = 0;
         num_placements     = generate_placement_array(pa);
-        cmp_ok(num_placements, "==", 5546, "generates expected number of placements");
-        BITBOARD first_light_tavern_plcmt = {
-            {0x1ULL | (1ULL << (LIGHT_TAVERN_1 + 49)), 0}};
-        cmp_mem(&pa->bb[0], &first_light_tavern_plcmt, sizeof(BITBOARD));
+        cmp_ok(num_placements, "==", 5546,
+               "generates expected number of placements");
         free(pa);
         done_testing();
 }

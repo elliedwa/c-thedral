@@ -36,7 +36,7 @@ enum piece
         LIGHT_CASTLE,
         LIGHT_INFIRMARY,
         LIGHT_ACADEMY,
-        DARK_PIECE_OFFSET,
+        DARK_PIECE_OFFSET = 0x10,
         DARK_TAVERN_1 = LIGHT_TAVERN_1 + DARK_PIECE_OFFSET,
         DARK_TAVERN_2,
         DARK_STABLE_1,

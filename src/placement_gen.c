@@ -124,24 +124,27 @@ generate_placement_array(placement_array *pa)
 
                 for (int mask_index = 0; mask_index < data.symmetry;
                      mask_index++) {
-                        PADDED_BITBOARD mask = {{data.masks[mask_index], 0}};
-                        while (!pbb_check_stop_bit(mask)) {
-                                if (pbb_validate(mask)) {
+                        PADDED_BITBOARD padded_mask = {{data.masks[mask_index], 0}};
+                        while (!pbb_check_stop_bit(padded_mask)) {
+                                if (pbb_validate(padded_mask)) {
                                         for (int pce = 0; pce < data.how_many;
                                              pce++) {
                                                 BITBOARD bit =
                                                     piece_bit(data.pieces[pce]);
+                                                BITBOARD mask = pbb_remove_padding(padded_mask);
                                                 BITBOARD plcmt = {{0, 0}};
                                                 bb_or(&plcmt, &mask, &bit);
                                                 bb_copy(&pa->bb[ndx++], &plcmt);
                                         }
                                 }
-                                pbb_shl(&mask);
+                                pbb_shl(&padded_mask);
                         }
                 }
         }
+        qsort(pa->bb, 5546, sizeof(BITBOARD), bb_cmp);
         return ndx;
 }
+
 placement_array *
 pa_alloc(void)
 {
