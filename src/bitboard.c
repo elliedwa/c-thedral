@@ -143,3 +143,9 @@ DEBUG_print_bitboard_visual(BITBOARD *b)
         }
         putchar('\n');
 }
+
+void
+DEBUG_print_bitboard_hex(BITBOARD *b)
+{
+        printf("%.16lx|%.16lx\n", b->bb[0], b->bb[1]);
+}

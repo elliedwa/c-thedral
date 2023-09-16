@@ -49,7 +49,7 @@ void bb_copy(BITBOARD *to, BITBOARD *from);
 
 int bb_cmp(const void *lhs, const void *rhs);
 
-void DEBUG_print_bitboard_hex(BITBOARD b);
+void DEBUG_print_bitboard_hex(BITBOARD *b);
 void DEBUG_print_bitboard_visual(BITBOARD *b);
 
 #endif

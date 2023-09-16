@@ -62,9 +62,3 @@ pbb_shl(PADDED_BITBOARD *board)
         }
         return board;
 }
-
-void
-DEBUG_print_bitboard_hex(BITBOARD b)
-{
-        printf("%.16lx|%.16lx\n", b.bb[0], b.bb[1]);
-}
