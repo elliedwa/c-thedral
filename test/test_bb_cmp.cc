@@ -15,17 +15,17 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cthedral/bitboard.h"
-#include "cthedral/pieces.h"
-#include "cthedral/placement_gen.h"
-#include "tap.h"
-
-#include <stdlib.h>
+extern "C" {
+#include <cthedral/bitboard.h>
+#include <cthedral/pieces.h>
+#include <cthedral/placement_gen.h>
+}
+#include <tap++/tap++.h>
 
 int
 main(void)
 {
-        plan(NO_PLAN);
+        using namespace TAP;
         BITBOARD bb1       = {{0, 0}};
         BITBOARD cathedral = {{0x400803802, 0}};
         BITBOARD cbit      = piece_bit(CATHEDRAL);
@@ -36,22 +36,20 @@ main(void)
         BITBOARD ltbit  = piece_bit(LIGHT_TAVERN_1);
         bb_or(&bb2, &tavern, &ltbit);
 
-
-        BITBOARD bb3    = {{0, 0}};
-        BITBOARD tavern_shifted = {{0x1ULL<<6, 0}};
-        BITBOARD ltshiftbit  = piece_bit(LIGHT_TAVERN_1);
+        BITBOARD bb3            = {{0, 0}};
+        BITBOARD tavern_shifted = {{0x1ULL << 6, 0}};
+        BITBOARD ltshiftbit     = piece_bit(LIGHT_TAVERN_1);
         bb_or(&bb3, &tavern_shifted, &ltshiftbit);
 
-        BITBOARD bb4    = {{0, 0}};
+        BITBOARD bb4         = {{0, 0}};
         BITBOARD tavern_dark = {{0x1, 0}};
-        BITBOARD dtbit  = piece_bit(DARK_TAVERN_1);
+        BITBOARD dtbit       = piece_bit(DARK_TAVERN_1);
         bb_or(&bb4, &tavern_dark, &dtbit);
 
-        cmp_ok(bb_cmp(&bb1, &bb1), "==", 0, "equal bitboards return 0");
-        cmp_ok(bb_cmp(&bb1, &bb2), "==", -1, "cathedral comes before light tavern");
-        cmp_ok(bb_cmp(&bb2, &bb3), "==", -1, "piece in higher position comes later");
-        cmp_ok(bb_cmp(&bb3, &bb4), "==", -1, "dark pieces are after light");
-
+        is(bb_cmp(&bb1, &bb1), 0, "equal bitboards return 0");
+        is(bb_cmp(&bb1, &bb2), -1, "cathedral comes before light tavern");
+        is(bb_cmp(&bb2, &bb3), -1, "piece in higher position comes later");
+        is(bb_cmp(&bb3, &bb4), -1, "dark pieces are after light");
 
         done_testing();
 }

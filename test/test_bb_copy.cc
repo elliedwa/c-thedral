@@ -15,22 +15,19 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cthedral/bitboard.h"
-#include "cthedral/placement_gen.h"
-#include "tap.h"
-
-#include <stdlib.h>
+extern "C" {
+#include <cthedral/bitboard.h>
+}
+#include <tap++/tap++.h>
 
 int
 main(void)
 {
-        plan(2);
-        placement_array *pa = pa_alloc();
-        ok(pa != NULL, "placement_array can be allocated");
-        int num_placements = 0;
-        num_placements     = generate_placement_array(pa);
-        cmp_ok(num_placements, "==", 5546,
-               "generates expected number of placements");
-        free(pa);
+        using namespace TAP;
+        BITBOARD bb_copy_to;
+        BITBOARD bb_copy_from = {{0x1, 0x1000}};
+        bb_copy(&bb_copy_to, &bb_copy_from);
+        ok(bb_eq(&bb_copy_to, &bb_copy_from),
+           "bitboards can be copied to a destination pointer");
         done_testing();
 }

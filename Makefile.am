@@ -36,12 +36,16 @@ LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
                   $(top_srcdir)/build-aux/tap-driver.sh
 AM_LOG_DRIVER_FLAGS = --ignore-exit
 
-check_LIBRARIES = test/libtap.a
-test_libtap_a_SOURCES = test/tap.c test/tap.h
-LDADD = libcthedral.la test/libtap.a
+
+
+check_LIBRARIES = test/libtap++.a
+
+test_libtap___a_SOURCES = test/tap++.cc include/tap++/tap++.h
+
+LDADD = libcthedral.la test/libtap++.a
 check_PROGRAMS = test/test_placement_array_size test/test_bb_and test/test_bb_or \
 								 test/test_bb_xor test/test_bb_eq_ne test/test_bb_copy test/test_generate_placement_array \
 								 test/test_bb_cmp
-AM_DEFAULT_SOURCE_EXT = .c
+AM_DEFAULT_SOURCE_EXT = .cc
 TESTS = $(check_PROGRAMS)
 EXTRA_DIST = $(TESTS)

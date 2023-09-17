@@ -15,13 +15,16 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "cthedral/bitboard.h"
-#include "tap.h"
-#include <stdint.h>
+extern "C" {
+#include <cthedral/bitboard.h>
+}
+#include <tap++/tap++.h>
+#include <cstdint>
 
 int
 main(void)
 {
+        using namespace TAP;
         plan(5);
 
         BITBOARD empty = {{0, 0}};
@@ -32,8 +35,7 @@ main(void)
         ok(bb_eq(&empty, &empty), "a bitboard equals itself");
         ok(bb_ne(&empty, &not_empty),
            "a bitboard does not equal some other bitboard");
-        cmp_ok(bb_eq(&empty, &empty), "==", !bb_ne(&empty, &empty),
+        is(bb_eq(&empty, &empty), !bb_ne(&empty, &empty),
                "bb_eq and bb_ne are inverses of each other");
 
-        done_testing();
 }
