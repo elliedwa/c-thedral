@@ -32,8 +32,8 @@ main(void)
         BITBOARD xor1_bb_rhs = {{1, 0}};
         bb_xor(&xor1_got, &xor1_bb_lhs, &xor1_bb_rhs);
         ok(bb_eq(&xor1_got, &xor1_expected),
-                "boards with no overlap return all bits set in either "
-                "board");
+           "boards with no overlap return all bits set in either "
+           "board");
 
         BITBOARD xor2_expected = {{1, 0}};
         BITBOARD xor2_got;
@@ -41,7 +41,7 @@ main(void)
         BITBOARD xor2_bb_rhs = {{1, 1}};
         bb_xor(&xor2_got, &xor2_bb_lhs, &xor2_bb_rhs);
         ok(bb_eq(&xor2_got, &xor2_expected),
-                "boards with some overlap return only differing bits");
+           "boards with some overlap return only differing bits");
 
         BITBOARD xor3_expected = {{0xf0ff0ff0ff0fULL, 0x0ff0ff0ff0ffULL << 16}};
         BITBOARD xor3_got;
@@ -49,7 +49,7 @@ main(void)
         BITBOARD xor3_bb_rhs = {{0x0ff0ff0ff0ffULL, 0xf0ff0ff0ff0fULL << 16}};
         bb_xor(&xor3_got, &xor3_bb_lhs, &xor3_bb_rhs);
         ok(bb_eq(&xor3_got, &xor3_expected),
-                "operation works in more complex states");
+           "operation works in more complex states");
 
         BITBOARD xor4_expected = {
             {(UINT64_MAX >> 8) ^ (1ULL << 62), UINT64_MAX ^ (1ULL << 62)}};
@@ -58,6 +58,5 @@ main(void)
         BITBOARD xor4_bb_rhs = {{1ULL << 62, 1ULL << 62}};
         bb_xor(&xor4_got, &xor4_bb_lhs, &xor4_bb_rhs);
         ok(bb_eq(&xor4_got, &xor4_expected),
-                "operation works in the higher bits");
-
+           "operation works in the higher bits");
 }

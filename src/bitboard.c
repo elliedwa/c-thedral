@@ -22,123 +22,30 @@
  */
 
 #include "cthedral/bitboard.h"
-#include <stdint.h>
 #include <inttypes.h>
+#include <stdint.h>
 
 size_t sq_to_bb_index[100] = {
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 };
 
-bool bb_empty(BITBOARD *board)
+bool
+bb_empty(BITBOARD *board)
 {
         return (board->bb[0] == 0) && (board->bb[1] == 0);
 }
 
-bool bb_eq(BITBOARD *lhs, BITBOARD *rhs)
+bool
+bb_eq(BITBOARD *lhs, BITBOARD *rhs)
 {
         return lhs->bb[0] == rhs->bb[0] && lhs->bb[1] == rhs->bb[1];
 }
 
-bool bb_ne(BITBOARD *lhs, BITBOARD *rhs)
+bool
+bb_ne(BITBOARD *lhs, BITBOARD *rhs)
 {
         return !bb_eq(lhs, rhs);
 }
@@ -150,24 +57,28 @@ bb_not(BITBOARD board)
         return res;
 }
 
-void bb_and(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+void
+bb_and(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
 {
         res->bb[0] = lhs->bb[0] & rhs->bb[0];
         res->bb[1] = lhs->bb[1] & rhs->bb[1];
 }
-void bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+void
+bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
 {
         res->bb[0] = lhs->bb[0] | rhs->bb[0];
         res->bb[1] = lhs->bb[1] | rhs->bb[1];
 }
 
-void bb_xor(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+void
+bb_xor(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
 {
         res->bb[0] = lhs->bb[0] ^ rhs->bb[0];
         res->bb[1] = lhs->bb[1] ^ rhs->bb[1];
 }
 
-void bb_copy(BITBOARD *to, BITBOARD *from)
+void
+bb_copy(BITBOARD *to, BITBOARD *from)
 {
         to->bb[0] = from->bb[0];
         to->bb[1] = from->bb[1];
@@ -176,16 +87,17 @@ void bb_copy(BITBOARD *to, BITBOARD *from)
 static uint32_t
 extract_piece_bit(const BITBOARD *bb)
 {
-        uint32_t bit = 0;
+        uint32_t bit          = 0;
         uint32_t light_pieces = bb->bb[0] >> 49;
-        uint32_t dark_pieces = bb->bb[1] >> 49;
+        uint32_t dark_pieces  = bb->bb[1] >> 49;
         bit |= dark_pieces;
         bit <<= 14;
         bit |= light_pieces;
         return bit;
 }
 
-int bb_cmp(const void *lhs, const void *rhs)
+int
+bb_cmp(const void *lhs, const void *rhs)
 {
         BITBOARD bb1 = *(const BITBOARD *)lhs;
         BITBOARD bb2 = *(const BITBOARD *)rhs;
@@ -193,47 +105,39 @@ int bb_cmp(const void *lhs, const void *rhs)
         uint32_t pb1 = extract_piece_bit(&bb1);
         uint32_t pb2 = extract_piece_bit(&bb2);
 
-        if (bb_ne(&bb1, &bb2))
-        {
+        if (bb_ne(&bb1, &bb2)) {
 
-                if (pb1 < pb2)
-                {
+                if (pb1 < pb2) {
                         return -1;
                 }
-                if (pb1 > pb2)
-                {
+                if (pb1 > pb2) {
                         return 1;
                 }
 
-                if (bb1.bb[1] < bb2.bb[1])
-                {
+                if (bb1.bb[1] < bb2.bb[1]) {
                         return -1;
                 }
-                if (bb1.bb[1] > bb2.bb[1])
-                {
+                if (bb1.bb[1] > bb2.bb[1]) {
                         return 1;
                 }
-                if (bb1.bb[0] < bb2.bb[0])
-                {
+                if (bb1.bb[0] < bb2.bb[0]) {
                         return -1;
                 }
-                if (bb1.bb[0] > bb2.bb[0])
-                {
+                if (bb1.bb[0] > bb2.bb[0]) {
                         return 1;
                 }
         }
         return 0;
 }
 
-void DEBUG_print_bitboard_visual(BITBOARD *b)
+void
+DEBUG_print_bitboard_visual(BITBOARD *b)
 {
         BITBOARD_HALF hfs[2] = {b->bb[0], b->bb[1]};
-        for (size_t sq = 0; sq < 100; sq++)
-        {
+        for (size_t sq = 0; sq < 100; sq++) {
                 BITBOARD_HALF *hf = &hfs[sq_to_bb_index[sq]];
                 putchar('0' + (char)(*hf & 1));
-                if (sq % 10 == 9)
-                {
+                if (sq % 10 == 9) {
                         putchar('\n');
                 }
                 *hf >>= 1;
@@ -241,7 +145,8 @@ void DEBUG_print_bitboard_visual(BITBOARD *b)
         putchar('\n');
 }
 
-void DEBUG_print_bitboard_hex(BITBOARD *b)
+void
+DEBUG_print_bitboard_hex(BITBOARD *b)
 {
         printf("%.16" PRIu64 "|%.16" PRIu64 "\n", b->bb[0], b->bb[1]);
 }

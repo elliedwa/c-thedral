@@ -18,8 +18,8 @@
 extern "C" {
 #include <cthedral/bitboard.h>
 }
-#include <tap++/tap++.h>
 #include <cstdint>
+#include <tap++/tap++.h>
 
 int
 main(void)
@@ -36,6 +36,5 @@ main(void)
         ok(bb_ne(&empty, &not_empty),
            "a bitboard does not equal some other bitboard");
         is(bb_eq(&empty, &empty), !bb_ne(&empty, &empty),
-               "bb_eq and bb_ne are inverses of each other");
-
+           "bb_eq and bb_ne are inverses of each other");
 }

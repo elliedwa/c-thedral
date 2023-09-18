@@ -57,8 +57,8 @@ pbb_shl(PADDED_BITBOARD *board)
         board->bb[1] <<= 1;
         if (board->bb[0] & OVERFLOW_BIT) {
                 board->bb[0] ^=
-                    OVERFLOW_BIT; /* remove the bit from first half... */
-                board->bb[1] |= 1;   /*  ... and add it to second half */
+                    OVERFLOW_BIT;  /* remove the bit from first half... */
+                board->bb[1] |= 1; /*  ... and add it to second half */
         }
         return board;
 }

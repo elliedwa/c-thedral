@@ -19,8 +19,7 @@
 #define CATHEDRAL_PIECES_H_
 
 #include "cthedral/bitboard.h"
-enum piece
-{
+enum piece {
         CATHEDRAL,
         LIGHT_TAVERN_1,
         LIGHT_TAVERN_2,
@@ -37,7 +36,7 @@ enum piece
         LIGHT_INFIRMARY,
         LIGHT_ACADEMY,
         DARK_PIECE_OFFSET = 0x10,
-        DARK_TAVERN_1 = LIGHT_TAVERN_1 + DARK_PIECE_OFFSET,
+        DARK_TAVERN_1     = LIGHT_TAVERN_1 + DARK_PIECE_OFFSET,
         DARK_TAVERN_2,
         DARK_STABLE_1,
         DARK_STABLE_2,
@@ -57,8 +56,7 @@ enum piece
 
 extern size_t WHOSE_PIECE[DARK_ACADEMY + 1];
 
-enum piece_shape
-{
+enum piece_shape {
         SHAPE_TAVERN,
         SHAPE_STABLE,
         SHAPE_INN,

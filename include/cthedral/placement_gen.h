@@ -22,7 +22,7 @@
 #include "pieces.h"
 #include <stdlib.h>
 
-#define NUM_PLACEMENTS 5546U         /* theoretically! */
+#define NUM_PLACEMENTS 5546U /* theoretically! */
 #define NUM_CATHEDRAL_PLACEMENTS 56U
 #define NUM_PLAYER_PLACEMENTS ((NUM_PLACEMENTS - NUM_CATHEDRAL_PLACEMENTS) / 2)
 #define PA_CAPACITY NUM_PLACEMENTS

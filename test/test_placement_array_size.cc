@@ -28,8 +28,10 @@ main(void)
 
         placement_array pa;
         generate_placement_array(&pa);
-        is(sizeof(pa.bb) / sizeof(pa.bb[0]), PA_CAPACITY, "correct number of bitboards");
-        is(sizeof(pa.bb), sizeof(BITBOARD) * PA_CAPACITY, "correct number of bitboards, tested another way");
+        is(sizeof(pa.bb) / sizeof(pa.bb[0]), PA_CAPACITY,
+           "correct number of bitboards");
+        is(sizeof(pa.bb), sizeof(BITBOARD) * PA_CAPACITY,
+           "correct number of bitboards, tested another way");
 
         is(sizeof(pa.cathedral), sizeof(BITBOARD) * NUM_CATHEDRAL_PLACEMENTS,
            "pa union works (cathedral)");

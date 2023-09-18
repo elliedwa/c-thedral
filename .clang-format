@@ -1,0 +1,8 @@
+---
+Language:        Cpp
+BasedOnStyle:  LLVM
+BreakBeforeBraces: Stroustrup
+UseTab: Never
+IndentWidth: 8
+AlwaysBreakAfterReturnType: AllDefinitions
+AlignConsecutiveAssignments: AcrossEmptyLines
