@@ -17,19 +17,38 @@ ACLOCAL_AMFLAGS = -I m4
 
 dist_doc_DATA = README
 
-AM_CPPFLAGS = -Iinclude -I$(srcdir)/include
+INCLUDE_FLAGS = -Iinclude -I$(srcdir)/include
 
-COMMON_DEFINES = -D_GLIBCXX_ASSERTIONS -D__USE_GNU
-COMMON_CFLAGS = $(COMMON_DEFINES) -Wall -Wextra -Wno-unused-variable -pipe \
-								-pedantic -Wimplicit-fallthrough
-AM_CFLAGS = $(COMMON_CFLAGS)
+COMMON_CPPFLAGS = -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_USE_CHAR8_T -D__USE_GNU
+COMMON_CFLAGS = -Wall -Wextra -pipe \
+								-ftrivial-auto-var-init=zero
+COMMON_CXXFLAGS = $(COMMON_CFLAGS)
+CLANG_CXXFLAGS = -Wthread-safety -Wthread-safety-beta -Wthread-safety-verbose
 
-lib_LTLIBRARIES = libcthedral.la
+DEBUG_CPPFLAGS = -DDEBUG -D_GLIBCXX_DEBUG
+DEBUG_CFLAGS = -fno-omit-frame-pointer -mno-omit-leaf-frame-pointer
+DEBUG_CXXFLAGS = $(DEBUG_CFLAGS)
 
-libcthedral_la_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c src/pbb.c
-nobase_include_HEADERS = include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h \
-												 include/cthedral/pbb.h
-libcthedral_la_CFLAGS = $(AM_CFLAGS)
+RELEASE_CPPFLAGS = -DNDEBUG -D_FORTIFY_SOURCE=3
+RELEASE_CFLAGS = -O2 -march=native -mtune=native -flto
+RELEASE_CXXFLAGS = $(RELEASE_CFLAGS)
+
+#COMMON_SANITIZER_CPPFLAGS = -D_GLIBCXX_SANITIZE_STD_ALLOCATOR -D_GLIBCXX_SANITIZE_VECTOR
+#COMMON_SANITIZER_FLAGS = $(COMMON_SANITIZER_CPPFLAGS) -fsanitize=address,undefined -fsanitize-address-use-after-scope
+#GCC_SANITIZER_FLAGS = $(COMMON_SANITIZER_FLAGS)
+#LLVM_SANITIZER_FLAGS = $(COMMON_SANITIZER_FLAGS) -fsanitize=function,integer,nullability
+
+AM_CPPFLAGS = $(COMMON_CPPFLAGS) $(DEBUG_CPPFLAGS) $(INCLUDE_FLAGS)
+AM_CFLAGS = $(COMMON_CFLAGS) $(DEBUG_CFLAGS) -Wc++-compat
+AM_CXXFLAGS = $(COMMON_CXXFLAGS) $(DEBUG_CXXFLAGS)
+
+
+noinst_LIBRARIES = libcthedral.a
+
+libcthedral_a_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c src/pbb.c \
+												include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h \
+												include/cthedral/pbb.h
+libcthedral_a_CFLAGS = $(AM_CFLAGS)
 
 
 LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) \
@@ -42,7 +61,7 @@ check_LIBRARIES = test/libtap++.a
 
 test_libtap___a_SOURCES = test/tap++.cc include/tap++/tap++.h
 
-LDADD = libcthedral.la test/libtap++.a
+LDADD = libcthedral.a test/libtap++.a
 check_PROGRAMS = test/test_placement_array_size test/test_bb_and test/test_bb_or \
 								 test/test_bb_xor test/test_bb_eq_ne test/test_bb_copy test/test_generate_placement_array \
 								 test/test_bb_cmp

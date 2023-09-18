@@ -24,11 +24,13 @@ AC_CONFIG_SRCDIR([src/pieces.c])
 AC_CONFIG_MACRO_DIRS([m4])
 AC_CONFIG_HEADERS([config.h])
 
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_AWK
 AM_PROG_AR
+AC_PROG_RANLIB
 
 # Checks for libraries.
 
@@ -39,6 +41,7 @@ AC_CHECK_HEADERS([unistd.h])
 
 
 # Checks for typedefs, structures, and compiler characteristics.
+AX_CXX_COMPILE_STDCXX([20], [ext], [mandatory])
 AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_SIZE_T
@@ -53,5 +56,4 @@ AC_CHECK_FUNCS([regcomp])
 
 AC_CONFIG_FILES([Makefile])
 AC_REQUIRE_AUX_FILE([tap-driver.sh])
-LT_INIT
 AC_OUTPUT
