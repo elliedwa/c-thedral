@@ -105,15 +105,17 @@ get_placement(enum piece_shape shape, int sym, int shift)
 }
 */
 
-static const int placements_per_shape[NUM_PIECE_SHAPES] = {
-    [SHAPE_CATHEDRAL] = 56,      [SHAPE_TAVERN] = 100 * 4,
-    [SHAPE_STABLE] = 180 * 4,    [SHAPE_INN] = 324 * 4,
-    [SHAPE_BRIDGE] = 160 * 2,    [SHAPE_SQUARE] = 81 * 2,
-    [SHAPE_ABBEY_DARK] = 144,    [SHAPE_ABBEY_LIGHT] = 144,
-    [SHAPE_MANOR] = 288 * 2,     [SHAPE_INFIRMARY] = 64 * 2,
-    [SHAPE_TOWER] = 256 * 2,     [SHAPE_CASTLE] = 288 * 2,
-    [SHAPE_ACADEMY_LIGHT] = 256, [SHAPE_ACADEMY_DARK] = 256,
-};
+/*
+ *static const int placements_per_shape[NUM_PIECE_SHAPES] = {
+ *    [SHAPE_CATHEDRAL] = 56,      [SHAPE_TAVERN] = 100 * 4,
+ *    [SHAPE_STABLE] = 180 * 4,    [SHAPE_INN] = 324 * 4,
+ *    [SHAPE_BRIDGE] = 160 * 2,    [SHAPE_SQUARE] = 81 * 2,
+ *    [SHAPE_ABBEY_DARK] = 144,    [SHAPE_ABBEY_LIGHT] = 144,
+ *    [SHAPE_MANOR] = 288 * 2,     [SHAPE_INFIRMARY] = 64 * 2,
+ *    [SHAPE_TOWER] = 256 * 2,     [SHAPE_CASTLE] = 288 * 2,
+ *    [SHAPE_ACADEMY_LIGHT] = 256, [SHAPE_ACADEMY_DARK] = 256,
+ *};
+ */
 
 int
 generate_placement_array(placement_array *pa)
