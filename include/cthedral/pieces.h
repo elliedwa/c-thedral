@@ -18,6 +18,10 @@
 #ifndef CATHEDRAL_PIECES_H_
 #define CATHEDRAL_PIECES_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cthedral/bitboard.h"
 enum piece {
         CATHEDRAL,
@@ -75,5 +79,9 @@ enum piece_shape {
 };
 
 BITBOARD piece_bit(enum piece p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

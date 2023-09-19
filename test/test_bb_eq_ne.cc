@@ -15,10 +15,7 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-extern "C" {
 #include <cthedral/bitboard.h>
-}
-#include <cstdint>
 #include <tap++/tap++.h>
 
 int

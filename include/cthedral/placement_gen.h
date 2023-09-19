@@ -18,6 +18,10 @@
 #ifndef CATHEDRAL_PLACEMENT_GEN_H_
 #define CATHEDRAL_PLACEMENT_GEN_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "bitboard.h"
 #include "pieces.h"
 #include <stdlib.h>
@@ -39,5 +43,9 @@ typedef union placement_array {
 placement_array *pa_alloc(void);
 
 int generate_placement_array(placement_array *pa);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

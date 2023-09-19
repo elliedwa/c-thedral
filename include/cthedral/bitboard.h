@@ -18,6 +18,10 @@
 #ifndef CATHEDRAL_BITBOARD_H_
 #define CATHEDRAL_BITBOARD_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
@@ -51,5 +55,9 @@ int bb_cmp(const void *lhs, const void *rhs);
 
 void DEBUG_print_bitboard_hex(BITBOARD *b);
 void DEBUG_print_bitboard_visual(BITBOARD *b);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

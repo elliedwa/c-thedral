@@ -15,11 +15,9 @@
  * along with c-thedral.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-extern "C" {
 #include <cthedral/bitboard.h>
 #include <cthedral/pieces.h>
 #include <cthedral/placement_gen.h>
-}
 #include <tap++/tap++.h>
 
 int

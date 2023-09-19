@@ -18,6 +18,10 @@
 #ifndef CTHEDRAL_PBB_H_
 #define CTHEDRAL_PBB_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cthedral/bitboard.h"
 
 typedef BITBOARD PADDED_BITBOARD;
@@ -35,5 +39,9 @@ BITBOARD_HALF pbb_half_remove_padding(PADDED_BITBOARD_HALF half);
 BITBOARD pbb_remove_padding(PADDED_BITBOARD board);
 bool pbb_validate(PADDED_BITBOARD board);
 bool pbb_check_stop_bit(PADDED_BITBOARD board);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
