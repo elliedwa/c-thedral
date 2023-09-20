@@ -19,9 +19,8 @@ dist_doc_DATA = README
 
 INCLUDE_FLAGS = -Iinclude -I$(srcdir)/include
 
-COMMON_CPPFLAGS = -D_GLIBCXX_ASSERTIONS -D_GLIBCXX_USE_CHAR8_T -D__USE_GNU
-COMMON_CFLAGS = -Wall -Wextra -pipe \
-								-ftrivial-auto-var-init=zero
+COMMON_CPPFLAGS = -D_GLIBCXX_ASSERTIONS
+COMMON_CFLAGS = -Wall -Wextra -pipe
 COMMON_CXXFLAGS = $(COMMON_CFLAGS)
 CLANG_CXXFLAGS = -Wthread-safety -Wthread-safety-beta -Wthread-safety-verbose
 
