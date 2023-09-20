@@ -43,7 +43,7 @@
 #include <tap++/tap++.h>
 
 namespace TAP {
-std::string TODO                      = "";
+std::string TODO;
 
 const details::skip_all_type skip_all = details::skip_all_type();
 const details::no_plan_type no_plan   = details::no_plan_type();
@@ -56,18 +56,16 @@ unsigned not_oks  = 0;
 std::string
 todo_test()
 {
-        if (TODO == "") {
+        if (TODO.empty()) {
                 return TODO;
         }
-        else {
-                return " # TODO " + TODO;
-        }
+        return " # TODO " + TODO;
 }
 
 bool
 is_todo_test() noexcept
 {
-        return TODO != "";
+        return !TODO.empty();
 }
 
 bool is_planned      = false;
@@ -83,7 +81,7 @@ output_plan(unsigned tests, const std::string &extra = "")
         *details::output << "1.." << tests << extra << std::endl;
         has_output_plan = true;
 }
-inline const std::string
+inline std::string
 to_string(unsigned num)
 {
         return std::to_string(num);
@@ -99,7 +97,7 @@ _done_testing(unsigned tests)
         }
         is_done = true;
 
-        if (expected && tests != expected) {
+        if ((expected != 0U) && tests != expected) {
                 fail(std::string("planned to run ") + to_string(expected) +
                      " tests but done_testing() expects " + to_string(tests));
         }
@@ -125,13 +123,13 @@ plan(unsigned tests)
         expected = tests;
 }
 void
-plan(const details::skip_all_type &, const std::string &reason)
+plan(const details::skip_all_type & /*unused*/, const std::string &reason)
 {
         output_plan(0, " #skip " + reason);
         std::exit(0);
 }
 void
-plan(const details::no_plan_type &)
+plan(const details::no_plan_type & /*unused*/)
 {
         is_planned = true;
         no_planned = true;
@@ -165,25 +163,23 @@ int
 exit_status()
 {
         //		bool passing;
-        if (!is_planned && encountered()) {
+        if (!is_planned && (encountered() != 0U)) {
                 diag("Tests were run but no plan was declared and "
                      "done_testing() was not seen.");
         }
         if (no_planned) {
                 output_plan(encountered());
-                return std::min(254u, not_oks);
+                return static_cast<int>(std::min(254U, not_oks));
         }
-        else if (expected == counter) {
-                return std::min(254u, not_oks);
+        if (expected == counter) {
+                return static_cast<int>(std::min(254U, not_oks));
         }
-        else {
-                return 255;
-        }
+        return 255;
 }
 bool
 summary()
 {
-        return not_oks;
+        return not_oks != 0U;
 }
 
 void

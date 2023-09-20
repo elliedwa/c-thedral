@@ -35,10 +35,7 @@ AC_PROG_RANLIB
 # Checks for libraries.
 
 # Checks for header files.
-AC_CHECK_HEADERS([stdint.h])
-AC_CHECK_HEADERS([sys.param.h])
-AC_CHECK_HEADERS([unistd.h])
-
+AC_CHECK_HEADERS([inttypes.h stdint.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AX_CXX_COMPILE_STDCXX([20], [ext], [mandatory])
@@ -46,6 +43,7 @@ AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_SIZE_T
 AC_TYPE_UINT64_T
+AC_TYPE_UINT32_T
 
 # Checks for library functions.
 AC_FUNC_MALLOC
