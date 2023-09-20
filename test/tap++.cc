@@ -37,9 +37,9 @@
 // along with this program; if not, see <https://www.gnu.org/licenses>.
 
 #define WANT_TEST_EXTRAS
-#include <boost/lexical_cast.hpp>
 #include <cstdlib>
 #include <stack>
+#include <string>
 #include <tap++/tap++.h>
 
 namespace TAP {
@@ -86,7 +86,7 @@ output_plan(unsigned tests, const std::string &extra = "")
 inline const std::string
 to_string(unsigned num)
 {
-        return boost::lexical_cast<std::string>(num);
+        return std::to_string(num);
 }
 
 inline void
