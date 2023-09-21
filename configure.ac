@@ -38,7 +38,7 @@ AC_PROG_RANLIB
 AC_CHECK_HEADERS([inttypes.h stdint.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
-AX_CXX_COMPILE_STDCXX([20], [ext], [mandatory])
+AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory])
 AC_CHECK_HEADER_STDBOOL
 AC_C_INLINE
 AC_TYPE_SIZE_T

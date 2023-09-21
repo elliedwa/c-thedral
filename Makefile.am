@@ -21,7 +21,7 @@ INCLUDE_FLAGS = -Iinclude -I$(srcdir)/include
 
 COMMON_CPPFLAGS = -D_GLIBCXX_ASSERTIONS
 COMMON_CFLAGS = -Wall -Wextra -pipe
-COMMON_CXXFLAGS = $(COMMON_CFLAGS)
+COMMON_CXXFLAGS = $(COMMON_CFLAGS) -Wshadow
 CLANG_CXXFLAGS = -Wthread-safety -Wthread-safety-beta -Wthread-safety-verbose
 
 DEBUG_CPPFLAGS = -DDEBUG -D_GLIBCXX_DEBUG
