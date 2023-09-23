@@ -23,6 +23,9 @@ extern "C" {
 #endif
 
 #include "cthedral/bitboard.h"
+
+#define NUM_PIECES 29
+
 enum piece {
         CATHEDRAL,
         LIGHT_TAVERN_1,

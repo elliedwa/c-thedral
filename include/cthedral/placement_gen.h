@@ -44,6 +44,7 @@ placement_array *pa_alloc(void);
 
 int generate_placement_array(placement_array *pa);
 
+
 #ifdef __cplusplus
 }
 #endif

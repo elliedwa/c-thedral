@@ -44,9 +44,14 @@ AM_CXXFLAGS = $(COMMON_CXXFLAGS) $(DEBUG_CXXFLAGS)
 
 noinst_LIBRARIES = libcthedral.a
 
-libcthedral_a_SOURCES = src/pieces.c src/placement_gen.c src/bitboard.c src/pbb.c \
-												include/cthedral/pieces.h include/cthedral/placement_gen.h include/cthedral/bitboard.h \
-												include/cthedral/pbb.h
+libcthedral_a_SOURCES = src/pieces.c \
+												src/placement_gen.c \
+												src/bitboard.c \
+												src/pbb.c \
+												include/cthedral/pieces.h \
+												include/cthedral/placement_gen.h \
+												include/cthedral/bitboard.h \
+												include/cthedral/pbb.h \
 libcthedral_a_CFLAGS = $(AM_CFLAGS)
 
 

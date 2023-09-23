@@ -101,7 +101,7 @@ bool
 bb_is_placement(const BITBOARD *bb) {
         uint32_t pb = extract_piece_bit(bb);
 
-        /* bit twiddling hack;checks if pb has <= 1 bits set */
+        /* bit twiddling hack; checks if pb has <= 1 bits set */
         return (pb & (pb - 1)) == 0;
 }
 
