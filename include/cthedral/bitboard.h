@@ -42,14 +42,14 @@ static const BITBOARD_HALF PIECES_BITS = 0xfffc000000000000;
 static const uint64_t ROW_MASK         = (1ULL << NUM_COLS) - 1;
 
 BITBOARD bb_not(BITBOARD board);
-void bb_and(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs);
-void bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs);
-void bb_xor(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs);
-bool bb_empty(BITBOARD *board);
-bool bb_eq(BITBOARD *lhs, BITBOARD *rhs);
-bool bb_ne(BITBOARD *lhs, BITBOARD *rhs);
+void bb_and(BITBOARD *res, const BITBOARD *lhs, const BITBOARD *rhs);
+void bb_or(BITBOARD *res, const BITBOARD *lhs, const BITBOARD *rhs);
+void bb_xor(BITBOARD *res, const BITBOARD *lhs, const BITBOARD *rhs);
+bool bb_empty(const BITBOARD *board);
+bool bb_eq(const BITBOARD *lhs, const BITBOARD *rhs);
+bool bb_ne(const BITBOARD *lhs, const BITBOARD *rhs);
 
-void bb_copy(BITBOARD *to, BITBOARD *from);
+void bb_copy(BITBOARD *to, const BITBOARD *from);
 
 bool bb_is_placement(const BITBOARD *bb);
 

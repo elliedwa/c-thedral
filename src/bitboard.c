@@ -23,8 +23,8 @@
 
 #include "cthedral/bitboard.h"
 #include <inttypes.h>
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 size_t sq_to_bb_index[100] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -34,19 +34,19 @@ size_t sq_to_bb_index[100] = {
 };
 
 bool
-bb_empty(BITBOARD *board)
+bb_empty(const BITBOARD *board)
 {
         return (board->bb[0] == 0) && (board->bb[1] == 0);
 }
 
 bool
-bb_eq(BITBOARD *lhs, BITBOARD *rhs)
+bb_eq(const BITBOARD *lhs, const BITBOARD *rhs)
 {
         return lhs->bb[0] == rhs->bb[0] && lhs->bb[1] == rhs->bb[1];
 }
 
 bool
-bb_ne(BITBOARD *lhs, BITBOARD *rhs)
+bb_ne(const BITBOARD *lhs, const BITBOARD *rhs)
 {
         return !bb_eq(lhs, rhs);
 }
@@ -59,27 +59,27 @@ bb_not(BITBOARD board)
 }
 
 void
-bb_and(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+bb_and(BITBOARD *res, const BITBOARD *lhs, const BITBOARD *rhs)
 {
         res->bb[0] = lhs->bb[0] & rhs->bb[0];
         res->bb[1] = lhs->bb[1] & rhs->bb[1];
 }
 void
-bb_or(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+bb_or(BITBOARD *res, const BITBOARD *lhs, const BITBOARD *rhs)
 {
         res->bb[0] = lhs->bb[0] | rhs->bb[0];
         res->bb[1] = lhs->bb[1] | rhs->bb[1];
 }
 
 void
-bb_xor(BITBOARD *res, BITBOARD *lhs, BITBOARD *rhs)
+bb_xor(BITBOARD *res, const BITBOARD *lhs, const BITBOARD *rhs)
 {
         res->bb[0] = lhs->bb[0] ^ rhs->bb[0];
         res->bb[1] = lhs->bb[1] ^ rhs->bb[1];
 }
 
 void
-bb_copy(BITBOARD *to, BITBOARD *from)
+bb_copy(BITBOARD *to, const BITBOARD *from)
 {
         to->bb[0] = from->bb[0];
         to->bb[1] = from->bb[1];
