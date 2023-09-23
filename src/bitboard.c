@@ -24,6 +24,7 @@
 #include "cthedral/bitboard.h"
 #include <inttypes.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 size_t sq_to_bb_index[100] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -88,12 +89,20 @@ static uint32_t
 extract_piece_bit(const BITBOARD *bb)
 {
         uint32_t bit          = 0;
-        uint32_t light_pieces = bb->bb[0] >> 49;
-        uint32_t dark_pieces  = bb->bb[1] >> 49;
+        uint32_t light_pieces = bb->bb[0] >> 50;
+        uint32_t dark_pieces  = bb->bb[1] >> 50;
         bit |= dark_pieces;
         bit <<= 14;
         bit |= light_pieces;
         return bit;
+}
+
+bool
+bb_is_placement(const BITBOARD *bb) {
+        uint32_t pb = extract_piece_bit(bb);
+
+        /* bit twiddling hack;checks if pb has <= 1 bits set */
+        return (pb & (pb - 1)) == 0;
 }
 
 int
@@ -148,5 +157,5 @@ DEBUG_print_bitboard_visual(BITBOARD *b)
 void
 DEBUG_print_bitboard_hex(BITBOARD *b)
 {
-        printf("%.16" PRIu64 "|%.16" PRIu64 "\n", b->bb[0], b->bb[1]);
+        printf("%.16" PRIx64 "|%.16" PRIx64 "\n", b->bb[0], b->bb[1]);
 }

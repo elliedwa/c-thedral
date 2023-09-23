@@ -51,6 +51,8 @@ bool bb_ne(BITBOARD *lhs, BITBOARD *rhs);
 
 void bb_copy(BITBOARD *to, BITBOARD *from);
 
+bool bb_is_placement(const BITBOARD *bb);
+
 int bb_cmp(const void *lhs, const void *rhs);
 
 void DEBUG_print_bitboard_hex(BITBOARD *b);
