@@ -97,12 +97,36 @@ extract_piece_bit(const BITBOARD *bb)
         return bit;
 }
 
-bool
-bb_is_placement(const BITBOARD *bb) {
-        uint32_t pb = extract_piece_bit(bb);
+static unsigned int
+bb_count_bits(const BITBOARD *bb)
+{
+        unsigned int nbits = 0;
+        for (int i = 0; i < 2; i++) {
+                BITBOARD_HALF half = bb->bb[i];
+                for (; half; nbits++) {
+                        half &= half - 1;
+                }
+        }
+        return nbits;
+}
 
-        /* bit twiddling hack; checks if pb has <= 1 bits set */
-        return (pb & (pb - 1)) == 0;
+bool
+bb_is_placement(const BITBOARD *bb)
+{
+        uint32_t pb = extract_piece_bit(bb);
+        if (bb_empty(bb)) {
+                return false;
+        }
+        if (!pb && bb_count_bits(bb) == 6) {
+                return true;
+        };
+        if ((pb &&
+             !(pb & (pb - 1))) /* checks if exactly one piece bit is set */
+            && bb_count_bits(bb) < 7 /* checks if no cathedral is present */
+        ) {
+                return true;
+        }
+        return false;
 }
 
 int

@@ -32,5 +32,12 @@ main(void)
                 }
         }
         is(falses, 0, "every board in placement_array is a placement");
+        BITBOARD empty = {{0, 0}};
+        ok(!bb_is_placement(&empty), "empty bitboard is not a placement");
+        BITBOARD test_board;
+
+        bb_or(&test_board, &pa.cathedral[0], &pa.light[0]);
+        ok(!bb_is_placement(&test_board),
+           "board with cathedral and one other piece is not a placement");
         done_testing();
 }
